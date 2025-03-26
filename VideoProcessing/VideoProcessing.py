@@ -98,7 +98,7 @@ while True:
 
     # Use grayscale thresholding to detect bright LEDs
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)
+    _, thresh = cv2.threshold(gray, 140, 255, cv2.THRESH_BINARY)
     
     # Find contours in the thresholded image
     contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
