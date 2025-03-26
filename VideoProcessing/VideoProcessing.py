@@ -99,6 +99,9 @@ if end_point is None:
     cv2.destroyAllWindows()
     exit()
 
+previous_first_position = middle_point
+previous_second_position = end_point
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -122,6 +125,9 @@ while True:
     # Create an empty mask with the same dimensions as the frame
     led_mask = np.zeros_like(frame)
     
+    current_first_position = None
+    current_second_position = None
+
     for cnt in contours:
         area = cv2.contourArea(cnt)
         if area < 5 or area > 500:  # adjust these area thresholds based on your LED size
@@ -135,12 +141,22 @@ while True:
         else:
             cX, cY = 0, 0
 
-        if math.sqrt((cX - reference_point[0])**2 + (cY - reference_point[1])**2)>3+math.sqrt((middle_point[0] - reference_point[0])**2 + (middle_point[1] - reference_point[1])**2):
+        #print(previous_first_position)
+        #print(previous_second_position)
+        firstDistanceFromPrevious = math.sqrt((cX - previous_first_position[0])**2 + (cY - previous_first_position[1])**2)
+        secondDistanceFromPrevious =  math.sqrt((cX - previous_second_position[0])**2 + (cY - previous_second_position[1])**2)
+        if firstDistanceFromPrevious > secondDistanceFromPrevious:
             pixel_number = 2
+            current_second_position = (cX,cY)
         else:
             pixel_number = 1
+            current_first_position = (cX,cY)
 
-        
+        if current_first_position == None:
+            current_first_position = previous_first_position
+        if current_second_position == None:
+            current_second_position = previous_second_position
+
         frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
         fps = cap.get(cv2.CAP_PROP_FPS)
         time_value = frame_index / fps
@@ -156,6 +172,9 @@ while True:
         # Optionally, draw a circle on the original frame for visualization
         cv2.putText(frame, f"{round(math.degrees(theta),2)},{pixel_number}", (cX+15, cY-2),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 128), 2)
+
+    previous_first_position = current_first_position
+    previous_second_position = current_second_position
 
     # For visualization, create a frame that blacks out everything except LEDs.
     # Here led_mask only has the regions corresponding to LED detected (rest is black).
