@@ -8,7 +8,8 @@ import json
 firstLED = []
 secondLED = []
 
-video_name = 'DSC_0059'
+video_name = 'DSC_0053'
+brightness_value = 245 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
 
 if os.path.exists(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt"):
     with open(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt", "r") as file:
@@ -145,7 +146,7 @@ else:
         # Use grayscale thresholding to detect bright LEDs
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
-        _, thresh = cv2.threshold(gray, 140, 255, cv2.THRESH_BINARY)
+        _, thresh = cv2.threshold(gray, brightness_value, 255, cv2.THRESH_BINARY)
         
         # Find contours in the thresholded image
         contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
