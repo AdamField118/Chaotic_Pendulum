@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import os
 import json
 
-video_name = 'DSC_0059' # name of the video
+video_name = 'DSC_0059' # name of the video you want to graph *dont include .AVI*
 brightness_value = 140 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
 
 path_to_videos = 'C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\' # wherever you have video on your local device
-path_to_data = 'C:\\Users\\adamf\\Downloads\\' # wherever you want to save already processed video's data
+path_to_data = 'C:\\Users\\adamf\\Downloads\\' # wherever you want to save the already processed video data
 
 firstLED = []
 secondLED = []
