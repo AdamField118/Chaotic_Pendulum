@@ -87,6 +87,12 @@ if end_point is None:
     cv2.destroyAllWindows()
     exit()
 
+def putTextOutline(img, text, org, font, fontScale, textColor, thickness, outlineColor, outlineThickness):
+    # Draw the outline first
+    cv2.putText(img, text, org, font, fontScale, outlineColor, outlineThickness, cv2.LINE_AA)
+    # Then draw the text on top
+    cv2.putText(img, text, org, font, fontScale, textColor, thickness, cv2.LINE_AA)
+
 # Initialize previous positions with the initially clicked points
 previous_first_position = middle_point
 previous_second_position = end_point
@@ -98,13 +104,11 @@ while True:
 
     # Use grayscale thresholding to detect bright LEDs
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
     _, thresh = cv2.threshold(gray, 140, 255, cv2.THRESH_BINARY)
     
     # Find contours in the thresholded image
     contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
-    led_coords = []
-    led_mask = np.zeros_like(frame)
     
     current_first_position = None
     current_second_position = None
@@ -129,43 +133,44 @@ while True:
 
         # Updated LED identification logic:
         if (int(distanceFromPivot) in range(int(lengthArm1 - 20), int(lengthArm1) + 20)) and (firstDistanceFromPrevious < (20 + secondDistanceFromPrevious)):
-            pixel_number = 1
+            # This contour is identified as LED1
             current_first_position = (cX, cY)
+            #cv2.putText(frame, "LED1", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+            putTextOutline(frame, "LED1", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, (0, 0, 0), 5)
+            x, y, w, h = cv2.boundingRect(cnt)
+            cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (255, 255, 255), 2)
         else:
-            pixel_number = 2
+            # This contour is identified as LED2
             current_second_position = (cX, cY)
+            #cv2.putText(frame, "LED2", (100, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 128), 2)
+            putTextOutline(frame, "LED2", (100, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, (255, 255, 255), 5)
+            x, y, w, h = cv2.boundingRect(cnt)
+            cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (0, 0, 0), 2)
 
-        # Fallback in case no LED was detected in this frame
-        if current_first_position is None:
-            current_first_position = previous_first_position
-        if current_second_position is None:
-            current_second_position = previous_second_position
+    # Fallback in case no LED was detected in this frame
+    if current_first_position is None:
+        current_first_position = previous_first_position
+    if current_second_position is None:
+        current_second_position = previous_second_position
 
-        frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        time_value = frame_index / fps
+    # Get frame time
+    frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    time_value = frame_index / fps
 
-        theta = math.atan2(cX - reference_point[0], cY - reference_point[1])
-        led_coords.append((time_value, theta, pixel_number))
-        
-        # Draw bounding rectangle for visualization
-        x, y, w, h = cv2.boundingRect(cnt)
-        led_mask[y:y+h, x:x+w] = frame[y:y+h, x:x+w]
-        cv2.putText(frame, f"{round(math.degrees(theta),2)},{pixel_number}", (cX+15, cY-2),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 128), 2)
+    # LED1 angle from the pivot point:
+    theta1 = math.atan2(current_first_position[0] - reference_point[0], current_first_position[1] - reference_point[1])
+    # LED2 angle from LED1 (relative to vertical at LED1):
+    theta2 = math.atan2(current_second_position[0] - current_first_position[0], current_second_position[1] - current_first_position[1])
+    # Append the computed angles with their timestamp
+    firstLED.append((time_value, theta1))
+    secondLED.append((time_value, theta2))
 
+    # Update previous positions for next frame
     previous_first_position = current_first_position
     previous_second_position = current_second_position
 
     cv2.imshow("Original with LED Coordinates", frame)
-
-    # Save LED data into corresponding lists
-    for led in led_coords:
-        if led[2] == 2:
-            secondLED.append((led[0], led[1]))
-        else:
-            firstLED.append((led[0], led[1]))
-
     key = cv2.waitKey(30) & 0xFF
     if key == 27:  # ESC key
         break
@@ -174,34 +179,33 @@ cap.release()
 cv2.destroyAllWindows()
 
 # Graphing functions
-def plot_graph(data):
+def plot_graph(data, title):
     times = [point[0] for point in data]
     angles = [math.degrees(point[1]) for point in data]
     
     plt.figure(figsize=(8, 6))
-    plt.plot(times, angles, linestyle='-')
+    plt.plot(times, angles, linestyle='-', color='b')
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
-    plt.title("Angle vs Time Plot")
+    plt.title(title)
     plt.grid(True)
     plt.show()
 
-def plot_graphs(data1, data2):
-    times1 = [point[0] for point in data1]
-    angles1 = [math.degrees(point[1]) for point in data1]
+def plot_graph_comparison(data, data2, title):
+    times = [point[0] for point in data]
+    angles = [math.degrees(point[1]) for point in data]
     times2 = [point[0] for point in data2]
     angles2 = [math.degrees(point[1]) for point in data2]
-
+    
     plt.figure(figsize=(8, 6))
-    plt.plot(times1, angles1, linestyle='-', label="LED 1")
-    plt.plot(times2, angles2, color='red', linestyle='-', label="LED 2")
+    plt.plot(times, angles, linestyle='-', color='b')
+    plt.plot(times2, angles2, linestyle='-', color='r')
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
-    plt.title("Angle vs Time Plot")
-    plt.legend()
+    plt.title(title)
     plt.grid(True)
     plt.show()
 
-plot_graph(firstLED)
-plot_graph(secondLED)
-plot_graphs(firstLED, secondLED)
+plot_graph(firstLED, "LED1 Angle (from Pivot)")
+plot_graph(secondLED, "LED2 Angle (from LED1)")
+plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
