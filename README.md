@@ -2,7 +2,16 @@
  - [Overview](#overview)
  - [Video Processing](#video-processing)
     - [Motivation](#motivation)
- - [Second Item](#item-three)
+    - [Dev Process](#dev-process)
+        - [Start](#start)
+        - [Decoding Chaotic Tracking ](#decoding-chaotic-tracking)
+            - [Color Differentiation](#color-differentiation)
+            - [Previous Frame Proximity](#revious-frame-proximity)
+        - [Camera Setting](#camera-setting)
+    - [How to Use the Code](#how-to-use-the-code)
+ - [Simulation](#simulation)
+ - [Poters](#poster)
+ - [Credits](#credits)
 
 # Overview  
 In Intermediate Physics Laboratory (2025) we have a project to analyze a chaotic pendulum system. The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. If you are a future group doing this lab and hope to code something cool, consider forking this repository!  
