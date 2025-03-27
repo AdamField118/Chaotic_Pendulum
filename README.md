@@ -6,7 +6,7 @@
         - [Start](#start)
         - [Decoding Chaotic Tracking ](#decoding-chaotic-tracking)
             - [Color Differentiation](#color-differentiation)
-            - [Previous Frame Proximity](#revious-frame-proximity)
+            - [Previous Frame Proximity](#previous-frame-proximity)
         - [Camera Setting](#camera-setting)
     - [How to Use the Code](#how-to-use-the-code)
  - [Simulation](#simulation)
