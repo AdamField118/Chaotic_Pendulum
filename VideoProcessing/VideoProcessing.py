@@ -5,14 +5,17 @@ import matplotlib.pyplot as plt
 import os
 import json
 
+video_name = 'DSC_0059' # name of the video
+brightness_value = 140 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
+
+path_to_videos = 'C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\' # wherever you have video on your local device
+path_to_data = 'C:\\Users\\adamf\\Downloads\\' # wherever you want to save already processed video's data
+
 firstLED = []
 secondLED = []
 
-video_name = 'DSC_0053'
-brightness_value = 245 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
-
-if os.path.exists(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt"):
-    with open(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt", "r") as file:
+if os.path.exists(f"{path_to_data}{video_name}.txt"):
+    with open(f"{path_to_data}{video_name}.txt", "r") as file:
         for line in file:
             key, temp = line.split(":", 1)
             temp = temp.strip()
@@ -51,7 +54,7 @@ if os.path.exists(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt"):
     plot_graph(secondLED, "LED2 Angle (from LED1)")
     plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
 else:
-    cap = cv2.VideoCapture(f"C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\{video_name}.AVI")
+    cap = cv2.VideoCapture(f"{path_to_videos}{video_name}.AVI")
     if not cap.isOpened():
         print("Error opening video.")
         exit()
