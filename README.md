@@ -40,10 +40,21 @@ Also as a litte note, if you see a reflection of the LEDs in the video (from the
 ## How to Use the Code  
 The basic most surface level interfacing with the code is simply sticking to lines 7-11. Change the name of the video (don't include the file type there), change all the paths to fit your local device, keeping in mind the comments in the code. **Adjust the brightness values if and only if the computer vision detection of the LEDs is spotty**, use value like 140 for low aperture videos, use values really high like 245 for videos taken on auto or high aperture. This value is largely guess and check, I couldn't find a way to automate it (please try to impove this aspect of the code that would be SO cool).  
 We used Professor Noviello's camera provided for us, so the videos are in AVI format, if you have a different format you have to look through the code to change instances of ".AVI" and maybe decode. I tried imputting a phone video and it rotated it 90 degrees, I'm not sure why.  
+## Results  
+For the simpler physical pendulum we took this video:  
+[![YouTube Video](http://img.youtube.com/vi/cDfldQ1Gqp4/0.jpg)](http://www.youtube.com/watch?v=cDfldQ1Gqp4 "Video Title")
+And got this graph from LED tracking:  
+![Graph](VideoProcessing/images/current_state_graph_DSC_0053.png)
+Here is a video we took for the chaotic system:  
+[![YouTube Video](http://img.youtube.com/vi/fsyc1sKtDlc/0.jpg)](http://www.youtube.com/watch?v=fsyc1sKtDlc "Video Title")
+And we got this graph from LED tracking:  
+![Graph](VideoProcessing/images/current_state_graph_DSC_0059.png)
+Another graph and video is available in the current state folder of the video processing folder.  
 # Simulation  
 To be developed!  
 # Poster  
-To be made!  
+Here is an attached image of our poster:  
+*image here*
 # Credits  
 Made by Christopher Pacheco and Adam Field.  
 Thank you Professor Noviello and TAs Drew and Holden for all the help.
