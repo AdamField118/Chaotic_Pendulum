@@ -40,10 +40,17 @@ Also as a litte note, if you see a reflection of the LEDs in the video (from the
 ## How to Use the Code  
 The basic most surface level interfacing with the code is simply sticking to lines 7-11. Change the name of the video (don't include the file type there), change all the paths to fit your local device, keeping in mind the comments in the code. **Adjust the brightness values if and only if the computer vision detection of the LEDs is spotty**, use value like 140 for low aperture videos, use values really high like 245 for videos taken on auto or high aperture. This value is largely guess and check, I couldn't find a way to automate it (please try to impove this aspect of the code that would be SO cool).  
 We used Professor Noviello's camera provided for us, so the videos are in AVI format, if you have a different format you have to look through the code to change instances of ".AVI" and maybe decode. I tried imputting a phone video and it rotated it 90 degrees, I'm not sure why.  
+## Results  
+Here is a video we took:  
+[text](VideoProcessing/currentState/videos/DSC_0059.AVI)
+Here is the graph resulting from the LED tracking:  
+![alt text](VideoProcessing/currentState/images/current_state_graph_DSC_0059.png)
+Another graph and video is available in the current state folder of the video processing folder.  
 # Simulation  
 To be developed!  
 # Poster  
-To be made!  
+Here is an attached image of our poster:  
+*image here*
 # Credits  
 Made by Christopher Pacheco and Adam Field.  
 Thank you Professor Noviello and TAs Drew and Holden for all the help.
