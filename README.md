@@ -10,7 +10,7 @@
         - [Camera Setting](#camera-setting)
     - [How to Use the Code](#how-to-use-the-code)
  - [Simulation](#simulation)
- - [Poters](#poster)
+ - [Posters](#poster)
  - [Credits](#credits)
 
 # Overview  
