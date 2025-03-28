@@ -49,8 +49,7 @@ And got this graph from LED tracking:
 Here is a video we took for the chaotic system (click the picture below to be redirected):  
 [![YouTube Video](http://img.youtube.com/vi/fsyc1sKtDlc/0.jpg)](http://www.youtube.com/watch?v=fsyc1sKtDlc "Video Title")  
 And we got this graph from LED tracking:  
-![Graph](VideoProcessing/images/current_state_graph_DSC_0059.png)  
-Another graph and video is available in the current state folder of the video processing folder.  
+![Graph](VideoProcessing/images/current_state_graph_DSC_0059.png)   
 # Simulation  
 To be developed!  
 # Poster  
