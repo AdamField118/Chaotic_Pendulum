@@ -41,11 +41,12 @@ if os.path.exists(f"{path_to_data}{video_name}.txt"):
         angles2 = [math.degrees(point[1]) for point in data2]
         
         plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b')
-        plt.plot(times2, angles2, linestyle='-', color='r')
+        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
+        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
         plt.xlabel("Time (seconds)")
         plt.ylabel("Angle (degrees)")
         plt.title(title)
+        plt.legend()
         plt.grid(True)
         plt.show()
 
@@ -136,6 +137,11 @@ else:
         # Then draw the text on top
         cv2.putText(img, text, org, font, fontScale, textColor, thickness, cv2.LINE_AA)
 
+    def putBoxOutline(img, contour, color, outlineColor, boxThickness, outlineThickness):
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img, (x, y), (x+w+8, y+h+8), outlineColor, outlineThickness)
+        cv2.rectangle(img, (x, y), (x+w+8, y+h+8), color, boxThickness)
+
     # Initialize previous positions with the initially clicked points
     previous_first_position = middle_point
     previous_second_position = end_point
@@ -178,17 +184,18 @@ else:
             if (int(distanceFromPivot) in range(int(lengthArm1 - 20), int(lengthArm1) + 20)) and (firstDistanceFromPrevious < (20 + secondDistanceFromPrevious)):
                 # This contour is identified as LED1
                 current_first_position = (cX, cY)
-                #cv2.putText(frame, "LED1", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
                 putTextOutline(frame, "LED1", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, (0, 0, 0), 5)
-                x, y, w, h = cv2.boundingRect(cnt)
-                cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (255, 255, 255), 2)
+                #x, y, w, h = cv2.boundingRect(cnt)
+                #cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (255, 255, 255), 2)
+                putBoxOutline(frame, cnt, (255, 255, 255), (0, 0, 0), 2, 6)
             else:
                 # This contour is identified as LED2
                 current_second_position = (cX, cY)
-                #cv2.putText(frame, "LED2", (100, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 128), 2)
                 putTextOutline(frame, "LED2", (100, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, (255, 255, 255), 5)
-                x, y, w, h = cv2.boundingRect(cnt)
-                cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (0, 0, 0), 2)
+                #x, y, w, h = cv2.boundingRect(cnt)
+                #cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (0, 0, 0), 2)
+                putBoxOutline(frame, cnt, (0, 0, 0), (255, 255, 255), 2, 4)
+
 
         # Fallback in case no LED was detected in this frame
         if current_first_position is None:
@@ -245,11 +252,12 @@ else:
         angles2 = [math.degrees(point[1]) for point in data2]
         
         plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b')
-        plt.plot(times2, angles2, linestyle='-', color='r')
+        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
+        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
         plt.xlabel("Time (seconds)")
         plt.ylabel("Angle (degrees)")
         plt.title(title)
+        plt.legend()
         plt.grid(True)
         plt.show()
 
