@@ -52,9 +52,11 @@ And we got this graph from LED tracking:
 ![Graph](VideoProcessing/images/current_state_graph_DSC_0059.png)   
 # Simulation  
 To be developed!  
+The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
 # Poster  
 Here is an attached image of our poster:  
-*image here*
+## Planning  
+I think we primarily want this poster to focus on the development and results of the video processing program, then the talk we give after the second project period will likely be on the simulation and comparing approximations with real life data.  
 # Credits  
 Made by Christopher Pacheco and Adam Field.  
 Thank you Professor Noviello and TAs Drew and Holden for all the help.

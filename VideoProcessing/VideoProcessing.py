@@ -3,6 +3,8 @@ import math
 import matplotlib.pyplot as plt
 import os
 import json
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 video_name = 'DSC_0059' # name of the video you want to graph *dont include .AVI (see line 57 if it's not an AVI file)*
 brightness_value = 140 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
@@ -22,6 +24,38 @@ if os.path.exists(f"{path_to_data}{video_name}.txt"):
                 firstLED = json.loads(temp)
             elif key == "secondLED":
                 secondLED = json.loads(temp)
+            elif key == "Pivot":
+                pivot = json.loads(temp)
+
+    def pos_time_graph(data, data2, pivot, label, label2, pivotLabel):
+        t = [point[0] for point in data]
+        x = [point[2][0] for point in data]
+        y = [-point[2][1] for point in data]
+        t2 = [point[0] for point in data2]
+        x2 = [point[2][0] for point in data2]
+        y2 = [-point[2][1] for point in data2]
+        xP = pivot[0]
+        yP = pivot[1]
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Plot the trajectory: x and y positions with time into the page
+        ax.plot(x, t, y, label=label, color='b')
+        ax.plot(x2, t2, y2, label=label2, color='r')
+        ax.plot(xP, t, yP, label=pivotLabel, color='g')
+
+        ax.set_box_aspect((3, 7, 2))
+
+        # Label axes
+        ax.set_xlabel('X Position')
+        ax.set_ylabel('Time')
+        ax.set_zlabel('Y Position')
+
+        # Add a legend and display the plot
+        ax.legend()
+        plt.show()
+
     def plot_graph(data, title):
         times = [point[0] for point in data]
         angles = [math.degrees(point[1]) for point in data]
@@ -53,6 +87,8 @@ if os.path.exists(f"{path_to_data}{video_name}.txt"):
     plot_graph(firstLED, "LED1 Angle (from Pivot)")
     plot_graph(secondLED, "LED2 Angle (from LED1)")
     plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
+    pos_time_graph(firstLED, secondLED, pivot, "LED1", "LED2", "Pivot Point")
+    
 else:
     cap = cv2.VideoCapture(f"{path_to_videos}{video_name}.AVI")
     if not cap.isOpened():
@@ -212,9 +248,9 @@ else:
         theta1 = math.atan2(current_first_position[0] - reference_point[0], current_first_position[1] - reference_point[1])
         # LED2 angle from LED1 (relative to vertical at LED1):
         theta2 = math.atan2(current_second_position[0] - current_first_position[0], current_second_position[1] - current_first_position[1])
-        # Append the computed angles with their timestamp
-        firstLED.append((time_value, theta1))
-        secondLED.append((time_value, theta2))
+        # Append the computed angles with their timestamp, also the (x,y) position for some more interesting graphs
+        firstLED.append((time_value, theta1, current_first_position))
+        secondLED.append((time_value, theta2, current_second_position))
 
         # Update previous positions for next frame
         previous_first_position = current_first_position
@@ -229,10 +265,68 @@ else:
     cv2.destroyAllWindows()
 
     with open(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt", "w") as file:
+        file.write("Pivot:" + json.dumps(reference_point) + "\n")
         file.write("firstLED:" + json.dumps(firstLED) + "\n")
         file.write("secondLED:" + json.dumps(secondLED))
 
     # Graphing functions
+    def pos_time_graph(data, data2, pivot, label, label2, pivotLabel):
+        t = [point[0] for point in data]
+        x = [point[2][0] for point in data]
+        y = [-point[2][1] for point in data]
+        t2 = [point[0] for point in data2]
+        x2 = [point[2][0] for point in data2]
+        y2 = [-point[2][1] for point in data2]
+        xP = pivot[0]
+        yP = pivot[1]
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Plot the trajectory: x and y positions with time into the page
+        ax.plot(x, t, y, label=label, color='b')
+        ax.plot(x2, t2, y2, label=label2, color='r')
+        ax.plot(xP, t, yP, label=pivotLabel, color='g')
+
+        ax.set_box_aspect((3, 7, 2))
+
+        # Label axes
+        ax.set_xlabel('X Position')
+        ax.set_ylabel('Time')
+        ax.set_zlabel('Y Position')
+
+        # Add a legend and display the plot
+        ax.legend()
+        plt.show()
+
+    def plot_graph(data, title):
+        times = [point[0] for point in data]
+        angles = [math.degrees(point[1]) for point in data]
+        
+        plt.figure(figsize=(8, 6))
+        plt.plot(times, angles, linestyle='-', color='b')
+        plt.xlabel("Time (seconds)")
+        plt.ylabel("Angle (degrees)")
+        plt.title(title)
+        plt.grid(True)
+        plt.show()
+
+    def plot_graph_comparison(data, data2, title):
+        times = [point[0] for point in data]
+        angles = [math.degrees(point[1]) for point in data]
+        times2 = [point[0] for point in data2]
+        angles2 = [math.degrees(point[1]) for point in data2]
+        
+        plt.figure(figsize=(8, 6))
+        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
+        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
+        plt.xlabel("Time (seconds)")
+        plt.ylabel("Angle (degrees)")
+        plt.title(title)
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    
     def plot_graph(data, title):
         times = [point[0] for point in data]
         angles = [math.degrees(point[1]) for point in data]
@@ -264,3 +358,4 @@ else:
     plot_graph(firstLED, "LED1 Angle (from Pivot)")
     plot_graph(secondLED, "LED2 Angle (from LED1)")
     plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
+    pos_time_graph(firstLED, secondLED, reference_point, "LED1", "LED2", "Pivot Point")
