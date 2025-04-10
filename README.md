@@ -55,7 +55,7 @@ And we got this graph from LED tracking:
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
 ## Mathematical Model  
 Please see this pdf that describes the derivation of our equations of motion:  
-<a url="/Assets/Mathematical_Model">PDF Derivation of our equations of motion</a>
+[View the PDF (in Assets folder)](/Assets/Mathematical_Model.pdf)
 # Poster  
 Here is an attached image of our poster:  
 ## Planning  
