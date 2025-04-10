@@ -57,12 +57,13 @@ The first step will be to make a mathematical model, the next step will be to re
 We started by drawing a diagram to define our system:
 ![double_pendulum.jpg](images/double_pendulum.jpg)
 Now we make the expression for position of the center of mass of each pendulum arm: 
-<div align="center"> 
 $$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta, -\frac{l_1}{2}\cos\theta\right)$$  
 $$(x_2,y_2)=\left(l_1\sin\theta+\frac{l_1}{2}\sin\phi, -l_1\cos\theta-\frac{l_2}{2}\cos\phi\right)$$ 
-</div> 
 Then the kinetic and potential energy is given by:  
 $$T=\frac{1}{6}m_1\left(\dot{x}_1^2+\dot{y}_1^2\right)+\frac{1}{6}m_2\left(\dot{x}_2^2+\dot{y}_2^2\right)$$  
+<p align="center">
+  <img src="https://latex.codecogs.com/svg.latex?T%3D%5Cfrac%7B1%7D%7B6%7Dm_1%5Cleft%28%5Cdot%7Bx%7D_1%5E2%2B%5Cdot%7By%7D_1%5E2%5Cright%29%2B%5Cfrac%7B1%7D%7B6%7Dm_2%5Cleft%28%5Cdot%7Bx%7D_2%5E2%2B%5Cdot%7By%7D_2%5E2%5Cright%29">
+</p>
 $$V=m_1gy_1+m_2gy_2$$  
 Then we can make our Lagrangian by plugging in values and taking T-V, getting:  
 $$Blah$$  
