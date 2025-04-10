@@ -11,6 +11,9 @@
     - [How to Use the Code](#how-to-use-the-code)
     - [Results](#results)
  - [Simulation](#simulation)
+    - [Setting up the Lagrangian](#setting-up-the-lagrangian)
+    - [Euler-Lagrange Equations](#euler-lagrange-equations)
+    - [Final Equations](#final-equations)
  - [Poster](#poster)
  - [Credits](#credits)
 
@@ -55,8 +58,9 @@ And we got this graph from LED tracking:
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
 ## Mathematical Model  
 We started by drawing a diagram to define our system:  
-![image](Assets/double_pendulum.jpg)
+![image](Assets/double_pendulum.jpg)  
 Figure 1. Defining coordinates of the system.  
+### Setting up the Lagrangian  
 Now we make the expression for position of the center of mass of each pendulum arm:  
 $$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta_1, -\frac{l_1}{2}\cos\theta_1\right)$$  
 $$(x_2,y_2)=\left(l_1\sin\theta_1+\frac{l_2}{2}\sin\theta_2, -l_1\cos\theta_1-\frac{l_2}{2}\cos\theta_2\right)$$  
@@ -86,7 +90,7 @@ Multiplying out the parentheses and combine the $\cos\theta_1$ terms gives:
 $$V=-\frac{1}{2}(m_1+2m_2)gl_1\cos\theta_1-\frac{1}{2}m_2gl_2\cos\theta_2$$  
 Now making our Lagrangian ($L=T-V$), we get the following expression:  
 $$L=\frac{1}{24}(m_1+4m_2)l_1^2\dot{\theta}_1^2+\frac{1}{24}m_2l_2^2\dot{\theta}_2^2+\frac{1}{6}m_2l_1l_2\dot{\theta}_1\dot{\theta}_2\cos(\theta_1-\theta_2)$$$$+\frac{1}{2}(m_1+2m_2)gl_1\cos\theta_1+\frac{1}{2}m_2gl_2\cos\theta_2$$  
-The Euler-Lagrange equations are as follows:  
+### Euler-Lagrange Equations
 $$\frac{d}{dt}\left(\frac{dL}{d\dot{\theta}_1}\right)=\frac{dL}{d\theta_1}$$  
 $$\frac{d}{dt}\left(\frac{dL}{d\dot{\theta}_2}\right)=\frac{dL}{d\theta_2}$$  
 First let me do $\frac{dL}{d\dot{\theta}_1}$:  
@@ -138,12 +142,13 @@ $$\ddot{\theta}_1 = \frac{-6(m_1+2m_2)g\sin\theta_1-2m_2l_1\dot{\theta}_1^2\sin(
 Now that we have $\ddot{\theta}_1$ in terms of just the angles and angular velocities, we now can get $\ddot{\theta}_2$ with the equation we made earlier:  
 $$\ddot{\theta}_2=-2\frac{l_1}{l_2}\ddot{\theta}_1\cos(\theta_1-\theta_2)+2\frac{l_1}{l_2}\dot{\theta}_1^2\sin(\theta_1-\theta_2)-6\frac{g}{l_2}\sin\theta_2$$  
 I'm not too keen on plugging in and simplifying this, but now we have equations for $\ddot{\theta}_1$ and $\ddot{\theta}_2$ in terms of just $\theta_1,\theta_2,\dot{\theta}_1,\text{ and }\dot{\theta}_2$. The final equations are here:  
+### Final Equations
 $$\ddot{\theta}_1 = \frac{-6(m_1+2m_2)g\sin\theta_1-2m_2l_1\dot{\theta}_1^2\sin(2\theta_1-2\theta_2)+12m_2g\sin\theta_2\cos(\theta_1-\theta_2)-2m_2l_2\dot{\theta}_2^2\sin(\theta_1-\theta_2)}{l_1(m_1+4m_2) - 4m_2l_1\cos^2(\theta_1-\theta_2)}.$$  
 $$\ddot{\theta}_2=-2\frac{l_1}{l_2}\ddot{\theta}_1\cos(\theta_1-\theta_2)+2\frac{l_1}{l_2}\dot{\theta}_1^2\sin(\theta_1-\theta_2)-6\frac{g}{l_2}\sin\theta_2$$  
 # Poster  
-Here is an attached image of our poster:  
-## Planning  
-I think we primarily want this poster to focus on the development and results of the video processing program, then the talk we give after the second project period will likely be on the simulation and comparing approximations with real life data.  
+Here is an attached image of our poster, to be made.
+# Presentation   
+Here we can attach some information on our in class presentation, yet to be created.  
 # Credits  
 Made by Christopher Pacheco and Adam Field.  
 Thank you Professor Noviello and TAs Drew and Holden for all the help.
