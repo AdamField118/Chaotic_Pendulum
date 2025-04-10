@@ -55,10 +55,8 @@ And we got this graph from LED tracking:
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
 ## Mathematical Model  
 We started by drawing a diagram to define our system:  
-::: center
 ![image](Assets/double_pendulum.jpg)
-Figure 1. Defining coordinates of the system.
-:::
+Figure 1. Defining coordinates of the system.  
 Now we make the expression for position of the center of mass of each pendulum arm:  
 $$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta_1, -\frac{l_1}{2}\cos\theta_1\right)$$  
 $$(x_2,y_2)=\left(l_1\sin\theta_1+\frac{l_2}{2}\sin\theta_2, -l_1\cos\theta_1-\frac{l_2}{2}\cos\theta_2\right)$$  
