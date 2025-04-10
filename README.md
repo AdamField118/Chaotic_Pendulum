@@ -56,6 +56,7 @@ The first step will be to make a mathematical model, the next step will be to re
 ## Mathematical Model  
 Please see this pdf that describes the derivation of our equations of motion:  
 [View the PDF (in Assets folder)](/Assets/Mathematical_Model.pdf)
+<a href="Assets/Mathematical_Model.pdf" class="image fit"><img src="" alt="Image could go here"></a>
 # Poster  
 Here is an attached image of our poster:  
 ## Planning  
