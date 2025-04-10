@@ -45,14 +45,25 @@ We used Professor Noviello's camera provided for us, so the videos are in AVI fo
 For the simpler physical pendulum we took this video (click the picture below to be redirected):  
 [![YouTube Video](http://img.youtube.com/vi/cDfldQ1Gqp4/0.jpg)](http://www.youtube.com/watch?v=cDfldQ1Gqp4 "Video Title")  
 And got this graph from LED tracking:  
-![Graph](VideoProcessing/images/current_state_graph_DSC_0053.png)  
+![Graph 1](VideoProcessing/images/current_state_graph_DSC_0053.png)  
 Here is a video we took for the chaotic system (click the picture below to be redirected):  
 [![YouTube Video](http://img.youtube.com/vi/fsyc1sKtDlc/0.jpg)](http://www.youtube.com/watch?v=fsyc1sKtDlc "Video Title")  
 And we got this graph from LED tracking:  
-![Graph](VideoProcessing/images/current_state_graph_DSC_0059.png)   
+![Graph 2](VideoProcessing/images/current_state_graph_DSC_0059.png)   
 # Simulation  
-To be developed!  
+## Plan
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
+## Mathematical Model  
+We started by drawing a diagram to define our system:
+![double_pendulum.jpg](Simulations/images/double_pendulum.jpg)
+Now we make the expression for position of the center of mass of each pendulum arm:
+$$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta, -\frac{l_1}{2}\cos\theta\right)$$
+$$(x_2,y_2)=\left(l_1\sin\theta+\frac{l_1}{2}\sin\phi, -l_1\cos\theta-\frac{l_2}{2}\cos\phi\right)$$
+Then the kinetic and potential energy is given by:
+$$T=\frac{1}{6}m_1\left(\dot{x}_1^2+\dot{y}_1^2\right)+\frac{1}{6}m_2\left(\dot{x}_2^2+\dot{y}_2^2\right)$$
+$$V=m_1gy_1+m_2gy_2$$
+Then we can make our Lagrangian by plugging in values and taking T-V, getting:
+$$$$
 # Poster  
 Here is an attached image of our poster:  
 ## Planning  
