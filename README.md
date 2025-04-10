@@ -56,14 +56,14 @@ The first step will be to make a mathematical model, the next step will be to re
 ## Mathematical Model  
 We started by drawing a diagram to define our system:
 ![double_pendulum.jpg](images/double_pendulum.jpg)
-Now we make the expression for position of the center of mass of each pendulum arm:
-$$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta, -\frac{l_1}{2}\cos\theta\right)$$
-$$(x_2,y_2)=\left(l_1\sin\theta+\frac{l_1}{2}\sin\phi, -l_1\cos\theta-\frac{l_2}{2}\cos\phi\right)$$
-Then the kinetic and potential energy is given by:
-$$T=\frac{1}{6}m_1\left(\dot{x}_1^2+\dot{y}_1^2\right)+\frac{1}{6}m_2\left(\dot{x}_2^2+\dot{y}_2^2\right)$$
-$$V=m_1gy_1+m_2gy_2$$
-Then we can make our Lagrangian by plugging in values and taking T-V, getting:
-$$$$
+Now we make the expression for position of the center of mass of each pendulum arm:  
+$$(x_1,y_1)=\left(\frac{l_1}{2}\sin\theta, -\frac{l_1}{2}\cos\theta\right)$$  
+$$(x_2,y_2)=\left(l_1\sin\theta+\frac{l_1}{2}\sin\phi, -l_1\cos\theta-\frac{l_2}{2}\cos\phi\right)$$  
+Then the kinetic and potential energy is given by:  
+$$T=\frac{1}{6}m_1\left(\dot{x}_1^2+\dot{y}_1^2\right)+\frac{1}{6}m_2\left(\dot{x}_2^2+\dot{y}_2^2\right)$$  
+$$V=m_1gy_1+m_2gy_2$$  
+Then we can make our Lagrangian by plugging in values and taking T-V, getting:  
+$$Blah$$  
 # Poster  
 Here is an attached image of our poster:  
 ## Planning  
