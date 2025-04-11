@@ -60,10 +60,10 @@ The first step will be to make a mathematical model, the next step will be to re
 
 We started by drawing a diagram to define our system: 
 
-<p align="center">
-![image](Assets/double_pendulum.jpg)  
-Figure 1. Defining coordinates of the system.  
-</p> 
+<div align="center">
+  <img src="Assets/double_pendulum.jpg" alt="Double Pendulum Diagram" style="display: block; margin: 0 auto;"/>
+  <p>Figure 1. Defining coordinates of the system.</p>
+</div>
 
 ### Setting up the Lagrangian  
 
