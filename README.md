@@ -45,14 +45,32 @@ Also as a litte note, if you see a reflection of the LEDs in the video (from the
 The basic most surface level interfacing with the code is simply sticking to lines 7-11. Change the name of the video (don't include the file type there), change all the paths to fit your local device, keeping in mind the comments in the code. **Adjust the brightness values if and only if the computer vision detection of the LEDs is spotty**, use value like 140 for low aperture videos, use values really high like 245 for videos taken on auto or high aperture. This value is largely guess and check, I couldn't find a way to automate it (please try to impove this aspect of the code that would be SO cool).  
 We used Professor Noviello's camera provided for us, so the videos are in AVI format, if you have a different format you have to look through the code to change instances of ".AVI" and maybe decode. I tried imputting a phone video and it rotated it 90 degrees, I'm not sure why.  
 ## Results  
-For the simpler physical pendulum we took this video (click the picture below to be redirected):  
-[![YouTube Video](http://img.youtube.com/vi/cDfldQ1Gqp4/0.jpg)](http://www.youtube.com/watch?v=cDfldQ1Gqp4 "Video Title")  
+For the simpler physical pendulum we took this video (click the picture below to be redirected):    
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=cDfldQ1Gqp4">
+    <img src="http://img.youtube.com/vi/cDfldQ1Gqp4/0.jpg" 
+         alt="Physical Pendulum Video" 
+         style="display: block; margin: 0 auto; width: 80%;">
+  </a>
+</div>
 And got this graph from LED tracking:  
-![Graph 1](VideoProcessing/images/current_state_graph_DSC_0053.png)  
+<div align="center">
+  <img src="VideoProcessing/images/current_state_graph_DSC_0053.png" alt="Graph 2" width="50%">
+  <p>Figure 1. Motion of the Physical Pendulum.</p>
+</div>
 Here is a video we took for the chaotic system (click the picture below to be redirected):  
-[![YouTube Video](http://img.youtube.com/vi/fsyc1sKtDlc/0.jpg)](http://www.youtube.com/watch?v=fsyc1sKtDlc "Video Title")  
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=fsyc1sKtDlc">
+    <img src="http://img.youtube.com/vi/fsyc1sKtDlc/0.jpg" 
+         alt="Chaotic Double Pendulum Video" 
+         style="display: block; margin: 0 auto; width: 80%;">
+  </a>
+</div>
 And we got this graph from LED tracking:  
-![Graph 2](VideoProcessing/images/current_state_graph_DSC_0059.png)   
+<div align="center">
+  <img src="VideoProcessing/images/current_state_graph_DSC_0059.png" alt="Graph 2" width="50%">
+  <p>Figure 2. Motion of the Double Pendulum.</p>
+</div>
 # Simulation  
 ## Plan
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
@@ -62,7 +80,7 @@ We started by drawing a diagram to define our system:
 
 <div align="center">
   <img src="Assets/double_pendulum.jpg" alt="Diagram" width="50%">
-  <p>Figure 1. Defining coordinates of the system.</p>
+  <p>Figure 3. Defining coordinates of the system.</p>
 </div>
 
 ### Setting up the Lagrangian  
