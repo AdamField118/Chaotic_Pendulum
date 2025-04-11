@@ -58,9 +58,12 @@ And we got this graph from LED tracking:
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
 ## Mathematical Model  
 
-We started by drawing a diagram to define our system:  
+We started by drawing a diagram to define our system: 
+
+<p align="center">
 ![image](Assets/double_pendulum.jpg)  
 Figure 1. Defining coordinates of the system.  
+</p> 
 
 ### Setting up the Lagrangian  
 
