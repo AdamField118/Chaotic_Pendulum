@@ -61,7 +61,7 @@ The first step will be to make a mathematical model, the next step will be to re
 We started by drawing a diagram to define our system: 
 
 <div align="center">
-  <img src="Assets/double_pendulum.jpg" alt="Double Pendulum Diagram" style="display: block; margin: 0 auto;"/>
+  <img src="Assets/double_pendulum.jpg" alt="Diagram" width="50%">
   <p>Figure 1. Defining coordinates of the system.</p>
 </div>
 
