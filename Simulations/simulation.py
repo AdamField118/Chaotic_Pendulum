@@ -13,8 +13,6 @@ m2 = 4.0    # mass of second link
 l1 = 0.525    # length of first link
 l2 = 0.473   # length of second link
 g  = 9.81   # gravitational acceleration
-b1 = 0.03
-b2 = 0.03
 
 # ----------------------------------------------------------
 # 2. Define the equations of motion using the provided equations
@@ -54,14 +52,12 @@ def equations_of_motion(t, y):
         - (2*m2*l1*(omega1**2)*np.sin(2*theta1 - 2*theta2))
         + (12*m2*g*np.sin(theta2)*np.cos(theta1 - theta2))
         - (2*m2*l2*(omega2**2)*np.sin(theta1 - theta2))
-        - (b1 * omega1)
     ) / ((l1*(m1+4*m2)) - (4*m2*l1*(np.cos(theta1 - theta2)**2)))
 
     ddtheta2 = (
         -(2*(l1/l2)*ddtheta1*np.cos(theta1 - theta2)) 
         +(2*(l1/l2)*omega1**2*np.sin(theta1 - theta2)) 
         - (6*(g/l2)*np.sin(theta2))
-        -((12*b2*omega2)/(m2*(l2**2)))
         )
 
     return [omega1, omega2, ddtheta1, ddtheta2]
@@ -69,7 +65,7 @@ def equations_of_motion(t, y):
 # ----------------------------------------------------------
 # 3. Set up initial conditions and time span
 # ----------------------------------------------------------
-theta1_0 = 1.672   # initial angle of link 1 (90 degrees)
+theta1_0 = 1.5708   # initial angle of link 1 (90 degrees)
 theta2_0 = 0.0         # initial angle of link 2 (0 degrees)
 omega1_0 = 0.0         # initial angular velocity of link 1
 omega2_0 = 0.0         # initial angular velocity of link 2
