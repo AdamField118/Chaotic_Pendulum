@@ -11,6 +11,7 @@
     - [How to Use the Code](#how-to-use-the-code)
     - [Results](#results)
  - [Simulation](#simulation)
+    - [Plan](#plan)
     - [Setting up the Lagrangian](#setting-up-the-lagrangian)
     - [Euler-Lagrange Equations](#euler-lagrange-equations)
     - [Final Equations](#final-equations)
@@ -71,6 +72,7 @@ And we got this graph from LED tracking:
   <img src="VideoProcessing/images/current_state_graph_DSC_0059.png" alt="Graph 2" width="90%">
   <p>Figure 2. Motion of the Double Pendulum.</p>
 </div>
+
 # Simulation  
 ## Plan
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
