@@ -4,6 +4,10 @@ from scipy.integrate import solve_ivp
 from matplotlib.animation import FuncAnimation
 import math
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import PillowWriter
+
+title = 'Chaotic Pendulum Oscillation'
+sim_outpath = './Simulations/sim_outfiles/'
 
 # ----------------------------------------------------------
 # 1. Define system parameters
@@ -138,8 +142,10 @@ ani = FuncAnimation(
     init_func=init, blit=True, interval=20
 )
 
-plt.title("Double Chaotic Pendulum Oscillation")
-plt.show()
+plt.title(title)
+writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+ani.save(f'{sim_outpath}{title}.gif', writer=writer)
+plt.close()
 
 arm1_positions = []  # Each tuple: (time, x1, y1)
 arm2_positions = []  # Each tuple: (time, x2, y2)
@@ -197,8 +203,8 @@ def plot_graph_comparison(data, data2, title):
     angles2 = [math.degrees(point[1]) for point in data2]
         
     plt.figure(figsize=(8, 6))
-    plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
-    plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
+    plt.plot(times, angles, linestyle='-', color='b', label='Arm 1')
+    plt.plot(times2, angles2, linestyle='-', color='r', label='Arm 2')
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
     plt.title(title)
@@ -206,7 +212,7 @@ def plot_graph_comparison(data, data2, title):
     plt.grid(True)
     plt.show()
 
-plot_graph(arm1_positions, "LED1 Angle (from Pivot)")
-plot_graph(arm2_positions, "LED2 Angle (from LED1)")
-plot_graph_comparison(arm1_positions, arm2_positions, "Comparison of Graphs")
-pos_time_graph(arm1_positions, arm2_positions, (0,0), "LED1", "LED2", "Pivot Point")
+plot_graph(arm1_positions, f"Theta 1 {title}")
+plot_graph(arm2_positions, f"Theta 2 {title}")
+plot_graph_comparison(arm1_positions, arm2_positions, title)
+pos_time_graph(arm1_positions, arm2_positions, (0,0), "Arm 1", "Arm 2", "Pivot Point")

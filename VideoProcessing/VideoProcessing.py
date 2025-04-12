@@ -8,6 +8,7 @@ import numpy as np
 
 video_name = 'DSC_0059' # name of the video you want to graph *dont include .AVI (see line 57 if it's not an AVI file)*
 brightness_value = 140 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
+graph_title = 'Chaotic Double Pendulum'
 
 path_to_videos = 'C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\' # wherever you have videos on your local device
 path_to_data = 'C:\\Users\\adamf\\Downloads\\' # wherever you want to save the already processed video data
@@ -84,10 +85,10 @@ if os.path.exists(f"{path_to_data}{video_name}.txt"):
         plt.grid(True)
         plt.show()
 
-    plot_graph(firstLED, "LED1 Angle (from Pivot)")
-    plot_graph(secondLED, "LED2 Angle (from LED1)")
-    plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
-    pos_time_graph(firstLED, secondLED, pivot, "LED1", "LED2", "Pivot Point")
+    plot_graph(firstLED, f"LED 1 Angle {graph_title}")
+    plot_graph(secondLED, f"LED 2 Angle {graph_title}")
+    plot_graph_comparison(firstLED, secondLED, graph_title)
+    pos_time_graph(firstLED, secondLED, pivot, "LED 1", "LED 2", "Pivot Point")
     
 else:
     cap = cv2.VideoCapture(f"{path_to_videos}{video_name}.AVI")
@@ -264,7 +265,7 @@ else:
     cap.release()
     cv2.destroyAllWindows()
 
-    with open(f"C:\\Users\\adamf\\Downloads\\{video_name}.txt", "w") as file:
+    with open(f"{path_to_data}{video_name}.txt", "w") as file:
         file.write("Pivot:" + json.dumps(reference_point) + "\n")
         file.write("firstLED:" + json.dumps(firstLED) + "\n")
         file.write("secondLED:" + json.dumps(secondLED))
@@ -355,7 +356,7 @@ else:
         plt.grid(True)
         plt.show()
 
-    plot_graph(firstLED, "LED1 Angle (from Pivot)")
-    plot_graph(secondLED, "LED2 Angle (from LED1)")
-    plot_graph_comparison(firstLED, secondLED, "Comparison of Graphs")
-    pos_time_graph(firstLED, secondLED, reference_point, "LED1", "LED2", "Pivot Point")
+    plot_graph(firstLED, f"LED 1 Angle {graph_title}")
+    plot_graph(secondLED, f"LED 2 Angle {graph_title}")
+    plot_graph_comparison(firstLED, secondLED, graph_title)
+    pos_time_graph(firstLED, secondLED, reference_point, "LED 1", "LED 2", "Pivot Point")
