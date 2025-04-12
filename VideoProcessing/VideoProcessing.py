@@ -3,360 +3,211 @@ import math
 import matplotlib.pyplot as plt
 import os
 import json
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+from typing import Tuple, List, Optional
 
-video_name = 'DSC_0059' # name of the video you want to graph *dont include .AVI (see line 57 if it's not an AVI file)*
-brightness_value = 140 # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
-graph_title = 'Chaotic Double Pendulum'
+# Configuration
+CONFIG = {
+    "video_name": "DSC_0059",
+    "brightness_value": 140,
+    "graph_title": "Chaotic Double Pendulum",
+    "path_to_videos": "C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\",
+    "path_to_data": "C:\\Users\\adamf\\Downloads\\",
+    "video_extension": ".AVI"
+}
 
-path_to_videos = 'C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\' # wherever you have videos on your local device
-path_to_data = 'C:\\Users\\adamf\\Downloads\\' # wherever you want to save the already processed video data
+Point = Tuple[int, int]
+LEDData = List[Tuple[float, float, Point]]
 
-firstLED = []
-secondLED = []
+def get_data_path() -> str:
+    return f"{CONFIG['path_to_data']}{CONFIG['video_name']}.txt"
 
-if os.path.exists(f"{path_to_data}{video_name}.txt"):
-    with open(f"{path_to_data}{video_name}.txt", "r") as file:
-        for line in file:
-            key, temp = line.split(":", 1)
-            temp = temp.strip()
-            if key == "firstLED":
-                firstLED = json.loads(temp)
+def get_video_path() -> str:
+    return f"{CONFIG['path_to_videos']}{CONFIG['video_name']}{CONFIG['video_extension']}"
+
+def select_point(image: np.ndarray, window_title: str) -> Optional[Point]:
+    selected_point = None
+    def callback(event, x, y, *args):
+        nonlocal selected_point
+        if event == cv2.EVENT_LBUTTONDOWN:
+            selected_point = (x, y)
+            cv2.destroyWindow(window_title)
+    cv2.namedWindow(window_title)
+    cv2.imshow(window_title, image)
+    cv2.setMouseCallback(window_title, callback)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return selected_point
+
+def load_saved_data() -> Tuple[Point, LEDData, LEDData]:
+    with open(get_data_path(), "r") as f:
+        pivot, first_led, second_led = None, [], []
+        for line in f:
+            key, value = line.split(":", 1)
+            if key == "Pivot":
+                pivot = json.loads(value)
+            elif key == "firstLED":
+                first_led = json.loads(value)
             elif key == "secondLED":
-                secondLED = json.loads(temp)
-            elif key == "Pivot":
-                pivot = json.loads(temp)
+                second_led = json.loads(value)
+        return pivot, first_led, second_led
 
-    def pos_time_graph(data, data2, pivot, label, label2, pivotLabel):
-        t = [point[0] for point in data]
-        x = [point[2][0] for point in data]
-        y = [-point[2][1] for point in data]
-        t2 = [point[0] for point in data2]
-        x2 = [point[2][0] for point in data2]
-        y2 = [-point[2][1] for point in data2]
-        xP = pivot[0]
-        yP = pivot[1]
+def save_data(pivot: Point, first_led: LEDData, second_led: LEDData) -> None:
+    with open(get_data_path(), "w") as f:
+        f.write(f"Pivot:{json.dumps(pivot)}\n")
+        f.write(f"firstLED:{json.dumps(first_led)}\n")
+        f.write(f"secondLED:{json.dumps(second_led)}\n")
 
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-
-        # Plot the trajectory: x and y positions with time into the page
-        ax.plot(x, t, y, label=label, color='b')
-        ax.plot(x2, t2, y2, label=label2, color='r')
-        ax.plot(xP, t, yP, label=pivotLabel, color='g')
-
-        ax.set_box_aspect((3, 7, 2))
-
-        # Label axes
-        ax.set_xlabel('X Position')
-        ax.set_ylabel('Time')
-        ax.set_zlabel('Y Position')
-
-        # Add a legend and display the plot
-        ax.legend()
-        plt.show()
-
-    def plot_graph(data, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.grid(True)
-        plt.show()
-
-    def plot_graph_comparison(data, data2, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        times2 = [point[0] for point in data2]
-        angles2 = [math.degrees(point[1]) for point in data2]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
-        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.legend()
-        plt.grid(True)
-        plt.show()
-
-    plot_graph(firstLED, f"LED 1 Angle {graph_title}")
-    plot_graph(secondLED, f"LED 2 Angle {graph_title}")
-    plot_graph_comparison(firstLED, secondLED, graph_title)
-    pos_time_graph(firstLED, secondLED, pivot, "LED 1", "LED 2", "Pivot Point")
+def process_frame(
+    frame: np.ndarray,
+    reference: Point,
+    prev_pos: Tuple[Point, Point],
+    brightness: int,
+    arm_length: float
+) -> Tuple[np.ndarray, Tuple[Point, Point]]:
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    _, thresh = cv2.threshold(gray, brightness, 255, cv2.THRESH_BINARY)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
-else:
-    cap = cv2.VideoCapture(f"{path_to_videos}{video_name}.AVI")
-    if not cap.isOpened():
-        print("Error opening video.")
-        exit()
+    current = [None, None]
+    for cnt in filter(lambda c: 5 < cv2.contourArea(c) < 500, contours):
+        M = cv2.moments(cnt)
+        if M["m00"] == 0:
+            continue
+        cX, cY = int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"])
+        
+        dist_pivot = math.hypot(cX - reference[0], cY - reference[1])
+        dist_prev = [math.hypot(cX - p[0], cY - p[1]) for p in prev_pos]
+        
+        if (arm_length-20 <= dist_pivot <= arm_length+20) and (dist_prev[0] < dist_prev[1] + 20):
+            current[0] = (cX, cY)
+            put_text_outline(frame, "LED1", (100, 100), (255, 255, 255), (0, 0, 0))
+            put_box_outline(frame, cnt, (255, 255, 255), (0, 0, 0))
+        else:
+            current[1] = (cX, cY)
+            put_text_outline(frame, "LED2", (100, 120), (0, 0, 0), (255, 255, 255))
+            put_box_outline(frame, cnt, (0, 0, 0), (255, 255, 255))
 
-    # Read the first frame
-    ret, first_frame = cap.read()
+    current = [prev if curr is None else curr for curr, prev in zip(current, prev_pos)]
+    return frame, current
+
+def put_text_outline(
+    img: np.ndarray,
+    text: str,
+    pos: Tuple[int, int],
+    fg: Tuple[int, int, int],
+    bg: Tuple[int, int, int]
+) -> None:
+    cv2.putText(img, text, pos, cv2.FONT_HERSHEY_SIMPLEX, 0.5, bg, 5, cv2.LINE_AA)
+    cv2.putText(img, text, pos, cv2.FONT_HERSHEY_SIMPLEX, 0.5, fg, 2, cv2.LINE_AA)
+
+def put_box_outline(
+    img: np.ndarray,
+    contour: np.ndarray,
+    fg: Tuple[int, int, int],
+    bg: Tuple[int, int, int]
+) -> None:
+    x, y, w, h = cv2.boundingRect(contour)
+    cv2.rectangle(img, (x, y), (x+w+8, y+h+8), bg, 5)
+    cv2.rectangle(img, (x, y), (x+w+8, y+h+8), fg, 2)
+
+def process_video() -> Tuple[Point, LEDData, LEDData]:
+    cap = cv2.VideoCapture(get_video_path())
+    ret, frame = cap.read()
     if not ret:
-        print("Cannot read the first frame.")
-        exit()
+        raise ValueError("Failed to read video")
 
-    # Global variable to store the selected pivot pixel value
-    reference_point = None
+    reference = select_point(frame, "Select Pivot Point")
+    first_point = select_point(frame, "Select first LED")
+    second_point = select_point(frame, "Select second LED")
+    arm_length = math.hypot(first_point[0]-reference[0], first_point[1]-reference[1])
 
-    def click_and_save_pivot(event, x, y, flags, param):
-        global reference_point, first_frame
-        if event == cv2.EVENT_LBUTTONDOWN:
-            reference_point = (x, y)
-            cv2.imshow("Select Pivot Point", first_frame)
-            cv2.destroyWindow("Select Pivot Point")
+    prev_pos = [first_point, second_point]
+    first_led, second_led = [], []
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
-    # Select pivot point
-    cv2.namedWindow("Select Pivot Point")
-    cv2.imshow("Select Pivot Point", first_frame)
-    cv2.setMouseCallback("Select Pivot Point", click_and_save_pivot)
-    cv2.waitKey(0)
-
-    if reference_point is None:
-        print("No pivot point selected. Exiting.")
-        cap.release()
-        cv2.destroyAllWindows()
-        exit()
-
-    # Global variable to store the selected first LED pixel value
-    middle_point = None
-
-    def click_and_save_first_led(event, x, y, flags, param):
-        global middle_point, first_frame
-        if event == cv2.EVENT_LBUTTONDOWN:
-            middle_point = (x, y)
-            cv2.imshow("Select first LED", first_frame)
-            cv2.destroyWindow("Select first LED")
-
-    # Select first LED point
-    cv2.namedWindow("Select first LED")
-    cv2.imshow("Select first LED", first_frame)
-    cv2.setMouseCallback("Select first LED", click_and_save_first_led)
-    cv2.waitKey(0)
-
-    if middle_point is None:
-        print("No first LED selected. Exiting.")
-        cap.release()
-        cv2.destroyAllWindows()
-        exit()
-
-    # Global variable to store the selected second LED pixel value
-    end_point = None
-
-    def click_and_save_second_led(event, x, y, flags, param):
-        global end_point, first_frame
-        if event == cv2.EVENT_LBUTTONDOWN:
-            end_point = (x, y)
-            cv2.imshow("Select second LED", first_frame)
-            cv2.destroyWindow("Select second LED")
-
-    # Select second LED point
-    cv2.namedWindow("Select second LED")
-    cv2.imshow("Select second LED", first_frame)
-    cv2.setMouseCallback("Select second LED", click_and_save_second_led)
-    cv2.waitKey(0)
-
-    if end_point is None:
-        print("No second LED selected. Exiting.")
-        cap.release()
-        cv2.destroyAllWindows()
-        exit()
-
-    def putTextOutline(img, text, org, font, fontScale, textColor, thickness, outlineColor, outlineThickness):
-        # Draw the outline first
-        cv2.putText(img, text, org, font, fontScale, outlineColor, outlineThickness, cv2.LINE_AA)
-        # Then draw the text on top
-        cv2.putText(img, text, org, font, fontScale, textColor, thickness, cv2.LINE_AA)
-
-    def putBoxOutline(img, contour, color, outlineColor, boxThickness, outlineThickness):
-        x, y, w, h = cv2.boundingRect(contour)
-        cv2.rectangle(img, (x, y), (x+w+8, y+h+8), outlineColor, outlineThickness)
-        cv2.rectangle(img, (x, y), (x+w+8, y+h+8), color, boxThickness)
-
-    # Initialize previous positions with the initially clicked points
-    previous_first_position = middle_point
-    previous_second_position = end_point
-
-    while True:
+    while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
-        # Use grayscale thresholding to detect bright LEDs
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # Use 140 for low aperture videos like DSC_0059, 245 for any other videos
-        _, thresh = cv2.threshold(gray, brightness_value, 255, cv2.THRESH_BINARY)
+        frame, current = process_frame(frame, reference, prev_pos, CONFIG["brightness_value"], arm_length)
+        time_val = cap.get(cv2.CAP_PROP_POS_FRAMES) / fps
         
-        # Find contours in the thresholded image
-        contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        theta1 = math.atan2(current[0][0]-reference[0], current[0][1]-reference[1])
+        theta2 = math.atan2(current[1][0]-current[0][0], current[1][1]-current[0][1])
         
-        current_first_position = None
-        current_second_position = None
+        first_led.append((time_val, theta1, current[0]))
+        second_led.append((time_val, theta2, current[1]))
+        prev_pos = current
 
-        for cnt in contours:
-            area = cv2.contourArea(cnt)
-            if area < 5 or area > 500:  # adjust thresholds based on LED size
-                continue
-
-            # Compute centroid using moments
-            M = cv2.moments(cnt)
-            if M["m00"] != 0:
-                cX = int(M["m10"] / M["m00"])
-                cY = int(M["m01"] / M["m00"])
-            else:
-                cX, cY = 0, 0
-
-            lengthArm1 = math.sqrt((middle_point[0] - reference_point[0])**2 + (middle_point[1] - reference_point[1])**2)
-            distanceFromPivot = math.sqrt((cX - reference_point[0])**2 + (cY - reference_point[1])**2)
-            firstDistanceFromPrevious = math.sqrt((cX - previous_first_position[0])**2 + (cY - previous_first_position[1])**2)
-            secondDistanceFromPrevious = math.sqrt((cX - previous_second_position[0])**2 + (cY - previous_second_position[1])**2)
-
-            # Updated LED identification logic:
-            if (int(distanceFromPivot) in range(int(lengthArm1 - 20), int(lengthArm1) + 20)) and (firstDistanceFromPrevious < (20 + secondDistanceFromPrevious)):
-                # This contour is identified as LED1
-                current_first_position = (cX, cY)
-                putTextOutline(frame, "LED1", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, (0, 0, 0), 5)
-                #x, y, w, h = cv2.boundingRect(cnt)
-                #cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (255, 255, 255), 2)
-                putBoxOutline(frame, cnt, (255, 255, 255), (0, 0, 0), 2, 6)
-            else:
-                # This contour is identified as LED2
-                current_second_position = (cX, cY)
-                putTextOutline(frame, "LED2", (100, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, (255, 255, 255), 5)
-                #x, y, w, h = cv2.boundingRect(cnt)
-                #cv2.rectangle(frame, (x, y), (x+w+4, y+h+4), (0, 0, 0), 2)
-                putBoxOutline(frame, cnt, (0, 0, 0), (255, 255, 255), 2, 4)
-
-
-        # Fallback in case no LED was detected in this frame
-        if current_first_position is None:
-            current_first_position = previous_first_position
-        if current_second_position is None:
-            current_second_position = previous_second_position
-
-        # Get frame time
-        frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        time_value = frame_index / fps
-
-        # LED1 angle from the pivot point:
-        theta1 = math.atan2(current_first_position[0] - reference_point[0], current_first_position[1] - reference_point[1])
-        # LED2 angle from LED1 (relative to vertical at LED1):
-        theta2 = math.atan2(current_second_position[0] - current_first_position[0], current_second_position[1] - current_first_position[1])
-        # Append the computed angles with their timestamp, also the (x,y) position for some more interesting graphs
-        firstLED.append((time_value, theta1, current_first_position))
-        secondLED.append((time_value, theta2, current_second_position))
-
-        # Update previous positions for next frame
-        previous_first_position = current_first_position
-        previous_second_position = current_second_position
-
-        cv2.imshow("Original with LED Coordinates", frame)
-        key = cv2.waitKey(30) & 0xFF
-        if key == 27:  # ESC key
+        cv2.imshow("Processing", frame)
+        if cv2.waitKey(30) == 27:
             break
 
     cap.release()
     cv2.destroyAllWindows()
+    return reference, first_led, second_led
 
-    with open(f"{path_to_data}{video_name}.txt", "w") as file:
-        file.write("Pivot:" + json.dumps(reference_point) + "\n")
-        file.write("firstLED:" + json.dumps(firstLED) + "\n")
-        file.write("secondLED:" + json.dumps(secondLED))
+def plot_pos_time(data1: LEDData, data2: LEDData, pivot: Point) -> None:
+    extract_x = lambda data: [p[2][0] for p in data]
+    extract_y = lambda data: [-p[2][1] for p in data]
+    extract_t = lambda data: [p[0] for p in data]
 
-    # Graphing functions
-    def pos_time_graph(data, data2, pivot, label, label2, pivotLabel):
-        t = [point[0] for point in data]
-        x = [point[2][0] for point in data]
-        y = [-point[2][1] for point in data]
-        t2 = [point[0] for point in data2]
-        x2 = [point[2][0] for point in data2]
-        y2 = [-point[2][1] for point in data2]
-        xP = pivot[0]
-        yP = pivot[1]
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-
-        # Plot the trajectory: x and y positions with time into the page
-        ax.plot(x, t, y, label=label, color='b')
-        ax.plot(x2, t2, y2, label=label2, color='r')
-        ax.plot(xP, t, yP, label=pivotLabel, color='g')
-
-        ax.set_box_aspect((3, 7, 2))
-
-        # Label axes
-        ax.set_xlabel('X Position')
-        ax.set_ylabel('Time')
-        ax.set_zlabel('Y Position')
-
-        # Add a legend and display the plot
-        ax.legend()
-        plt.show()
-
-    def plot_graph(data, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.grid(True)
-        plt.show()
-
-    def plot_graph_comparison(data, data2, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        times2 = [point[0] for point in data2]
-        angles2 = [math.degrees(point[1]) for point in data2]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
-        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.legend()
-        plt.grid(True)
-        plt.show()
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
     
-    def plot_graph(data, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.grid(True)
-        plt.show()
+    ax.plot(extract_x(data1), extract_t(data1), extract_y(data1), 
+            color='b', label='LED1')
+    
+    ax.plot(extract_x(data2), extract_t(data2), extract_y(data2), 
+            color='r', label='LED2')
+    
+    t_points = extract_t(data1)
+    ax.plot([pivot[0]]*len(t_points),  
+            t_points, 
+            [ -pivot[1]]*len(t_points),
+            color='g', label='Pivot')
 
-    def plot_graph_comparison(data, data2, title):
-        times = [point[0] for point in data]
-        angles = [math.degrees(point[1]) for point in data]
-        times2 = [point[0] for point in data2]
-        angles2 = [math.degrees(point[1]) for point in data2]
-        
-        plt.figure(figsize=(8, 6))
-        plt.plot(times, angles, linestyle='-', color='b', label='LED 1')
-        plt.plot(times2, angles2, linestyle='-', color='r', label='LED 2')
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Angle (degrees)")
-        plt.title(title)
-        plt.legend()
-        plt.grid(True)
-        plt.show()
+    ax.set_box_aspect((3, 7, 2))
+    ax.set_xlabel('X Position')
+    ax.set_ylabel('Time')
+    ax.set_zlabel('Y Position')
+    ax.legend()
+    plt.show()
 
-    plot_graph(firstLED, f"LED 1 Angle {graph_title}")
-    plot_graph(secondLED, f"LED 2 Angle {graph_title}")
-    plot_graph_comparison(firstLED, secondLED, graph_title)
-    pos_time_graph(firstLED, secondLED, reference_point, "LED 1", "LED 2", "Pivot Point")
+def plot_angles(data: LEDData) -> None:
+    plt.figure(figsize=(8, 6))
+    plt.plot([d[0] for d in data], [math.degrees(d[1]) for d in data], 'b')
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Angle (degrees)")
+    plt.title(CONFIG["graph_title"])
+    plt.grid(True)
+    plt.show()
+
+def plot_comparison(data1: LEDData, data2: LEDData) -> None:
+    plt.figure(figsize=(8, 6))
+    plt.plot([d[0] for d in data1], [math.degrees(d[1]) for d in data1], 'b', label='LED1')
+    plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], 'r', label='LED2')
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Angle (degrees)")
+    plt.title(CONFIG["graph_title"])
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def main():
+    data_path = get_data_path()
+    if os.path.exists(data_path):
+        pivot, first, second = load_saved_data()
+    else:
+        pivot, first, second = process_video()
+        save_data(pivot, first, second)
+
+    plot_angles(first)
+    plot_angles(second)
+    plot_comparison(first, second)
+    plot_pos_time(first, second, pivot)
+
+if __name__ == "__main__":
+    main()
