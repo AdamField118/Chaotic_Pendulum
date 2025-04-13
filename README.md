@@ -1,11 +1,8 @@
 # Content
 - [Overview](#overview)
-<details>
-<summary markdown="1">[Video Processing](VideoProcessing/README.md)</summary>
-This is how you dropdown.
-</details>
-
 - [Video Processing](VideoProcessing/README.md)
+  <details>
+  <summary>Contents of Video Processing</summary>
   - [Motivation](VideoProcessing/README.md#motivation)
     - [Dev Process](VideoProcessing/README.md#dev-process)
       - [Start](VideoProcessing/README.md#start)
@@ -15,7 +12,10 @@ This is how you dropdown.
       - [Camera Setting](VideoProcessing/README.md#camera-setting)
   - [How to Use the Code](VideoProcessing/README.md#how-to-use-the-code)
   - [Results](VideoProcessing/README.md#results)
+  </details>
 - [Simulation](Simulations/README.md)
+  <details>
+  <summary>Contents of Simulation</summary>
   - [Plan](Simulations/README.md#plan)
   - [Mathematical Model](Simulations/README.md#mathematical-model)
     - [Setting up the Lagrangian](Simulations/README.md#setting-up-the-lagrangian)
@@ -35,6 +35,7 @@ This is how you dropdown.
     - [Graphing Functions](Simulations/README.md#graphing-functions)
     - [Main](Simulations/README.md#main)
   - [Results](Simulations/README.md#results)
+  </details>
 - [Poster](#poster)
 - [Credits](#credits)
 
