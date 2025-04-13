@@ -1,5 +1,10 @@
- # Content
+# Content
 - [Overview](#overview)
+<details>
+<summary markdown="1">[Video Processing](VideoProcessing/README.md)</summary>
+This is how you dropdown.
+</details>
+
 - [Video Processing](VideoProcessing/README.md)
   - [Motivation](VideoProcessing/README.md#motivation)
     - [Dev Process](VideoProcessing/README.md#dev-process)

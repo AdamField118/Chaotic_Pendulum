@@ -121,14 +121,18 @@ def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[Pend
     theta2 = solution.y[1]
     times = solution.t
     
+    # Compute Cartesian coordinates for all time steps
+    x1, y1, x2, y2 = get_cartesian_coords(theta1, theta2)
+    
+    # Create PendulumData using ODE angles (theta1, theta2) directly
     arm1_data = [
-        PendulumData(t, math.atan2(y, x), (x, y))
-        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[:2])
+        PendulumData(t, th1, (x, y))
+        for t, th1, x, y in zip(times, theta1, x1, y1)
     ]
     
     arm2_data = [
-        PendulumData(t, math.atan2(y, x), (x, y))
-        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[2:])
+        PendulumData(t, th2, (x, y))
+        for t, th2, x, y in zip(times, theta2, x2, y2)
     ]
     
     return arm1_data, arm2_data
