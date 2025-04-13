@@ -8,11 +8,12 @@ from typing import Tuple, List, Optional
 
 # Configuration
 CONFIG = {
-    "video_name": "DSC_0059",
-    "brightness_value": 140,
+    "video_name": "DSC_0058",
+    "brightness_value": 245,
     "graph_title": "Chaotic Double Pendulum",
     "path_to_videos": "C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
+    "proc_outpath": "./VideoProcessing/processing_outfiles/",
     "video_extension": ".AVI"
 }
 
@@ -174,6 +175,7 @@ def plot_pos_time(data1: LEDData, data2: LEDData, pivot: Point) -> None:
     ax.set_ylabel('Time')
     ax.set_zlabel('Y Position')
     ax.legend()
+    plt.savefig(f"{CONFIG['proc_outpath']}{CONFIG['video_name']} - 3D {CONFIG['graph_title']}.png")
     plt.show()
 
 def plot_angles(data: LEDData, num: int) -> None:
@@ -194,6 +196,7 @@ def plot_comparison(data1: LEDData, data2: LEDData) -> None:
     plt.title(CONFIG["graph_title"])
     plt.legend()
     plt.grid(True)
+    plt.savefig(f"{CONFIG['proc_outpath']}{CONFIG['video_name']} - {CONFIG['graph_title']}.png")
     plt.show()
 
 def main():

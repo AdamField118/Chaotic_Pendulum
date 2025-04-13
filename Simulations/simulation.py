@@ -113,7 +113,7 @@ def create_animation(solution: dict) -> FuncAnimation:
     os.makedirs(CONFIG["sim_outpath"], exist_ok=True)
     ani.save(f"{CONFIG['sim_outpath']}{CONFIG['title']}.gif", 
             writer=PillowWriter(fps=15, bitrate=1800))
-    plt.close()
+    plt.show()
     return ani
 
 def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[PendulumData]]:
@@ -148,6 +148,7 @@ def plot_angle_comparison(arm1: List[PendulumData], arm2: List[PendulumData]) ->
     plt.title(f"Angle Comparison - {CONFIG['title']}")
     plt.legend()
     plt.grid(True)
+    plt.savefig(f"{CONFIG['sim_outpath']}Angle Comparison - {CONFIG['title']}.png")
     plt.show()
 
 def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> None:
@@ -172,6 +173,7 @@ def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> No
     ax.set_ylabel("Time")
     ax.set_zlabel("Y Position")
     ax.legend()
+    plt.savefig(f"{CONFIG['sim_outpath']}3D Trajectory - {CONFIG['title']}.png")
     plt.show()
 
 def main():
