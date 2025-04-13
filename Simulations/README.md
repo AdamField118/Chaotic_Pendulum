@@ -240,13 +240,13 @@ Unpacks the state vector "y", which contains:
 
 Denominator and Numerator:  
 
-Calculated using trigonometric functions to account for the coupling between the pendulums.  
-  
+Calculates the numerator and denominator of the big fraction in [Final Equations](#final-equations).  
+
 Angular Accelerations:  
 
-"ddtheta1": Computed using a combination of gravitational effects and the dynamics of the second pendulum.  
+"ddtheta1": This simply does the division in [Final Equations](#final-equations).  
 
-"ddtheta2": Derived partly from "ddtheta1" and includes additional terms for the second pendulum's dynamics.  
+"ddtheta2": Derived partly from "ddtheta1" and includes additional terms seen in [Final Equations](#final-equations).  
 
 ### Return Value  
 
@@ -254,7 +254,7 @@ The function returns a list "[omega1, omega2, ddtheta1, ddtheta2]", representing
 
 ## Solve Pendulum ODE
 
-This function sets up and solves the ordinary differential equations (ODEs) that describe the pendulum’s motion.  
+This function sets up and solves the ordinary differential equations (ODEs) that describe the pendulum’s motion from [Final Equations](#final-equations).  
 
 Time Setup:  
 
@@ -294,7 +294,7 @@ Uses "FuncAnimation" to create the animation, and saves it as a GIF file in the 
 
 Output:  
 
-Returns the animation object, with the GIF saved to file.  
+See [this gif](<sim_outfiles/Chaotic Pendulum Oscillation.gif>).   
 
 ## Process Pendulum Data
 
@@ -316,11 +316,11 @@ Output:
   
 Returns a tuple with two lists of "PendulumData" objects, one for each arm.  
 
-## Graphing Functions
+## Graphing Functions  
 
-These functions are responsible for visualizing the pendulum’s motion and comparing its behavior over time.
+These functions are responsible for visualizing the pendulum’s motion and comparing its behavior over time.  
 
-plot_angle_comparison  
+### plot_angle_comparison  
 
 Plots the angular displacement (converted to degrees) of both pendulum arms as a function of time.  
     - Iterates over the "PendulumData" lists for both arms.  
@@ -329,9 +329,9 @@ Plots the angular displacement (converted to degrees) of both pendulum arms as a
 
 Output:  
 
-Displays the plot showing a comparison of the angles of the two arms.  
+Displays the plot showing a comparison of the angles of the two arms.  See [this graph](<sim_outfiles/Angle Comparison - Chaotic Pendulum Oscillation.png>).
 
-plot_3d_trajectory  
+### plot_3d_trajectory  
 
 Generates a 3D plot to visualize the spatial trajectory of each pendulum arm over time.  
     - Extracts the x positions and corresponding y positions (using negative y for display) along with the time data.  
@@ -339,13 +339,11 @@ Generates a 3D plot to visualize the spatial trajectory of each pendulum arm ove
     - Labels the axes (X Position, Time, Y Position) and adds a legend.  
 Output:  
 
-Displays a 3D plot that shows how each arm’s position evolves over time.  
+Displays a 3D plot that shows how each arm’s position evolves over time.  See [this graph](<sim_outfiles/3D Trajectory - Chaotic Pendulum Oscillation.png>).
 
 ## Main  
 
 Serves as the entry point of the simulation, coordinating the execution of all other functions.  
-
-Key Steps:  
 
 Solve the ODE:  
 
@@ -369,4 +367,4 @@ Runs the simulation workflow and produces visual outputs (plots and animation).
 
 # Results  
 
-
+We aren't happy with the results yet, improvements to come probably.  
