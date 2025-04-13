@@ -158,10 +158,10 @@ def plot_pos_time(data1: LEDData, data2: LEDData, pivot: Point) -> None:
     ax = fig.add_subplot(111, projection='3d')
     
     ax.plot(extract_x(data1), extract_t(data1), extract_y(data1), 
-            color='b', label='LED1')
+            color='b', label='LED 1')
     
     ax.plot(extract_x(data2), extract_t(data2), extract_y(data2), 
-            color='r', label='LED2')
+            color='r', label='LED 2')
     
     t_points = extract_t(data1)
     ax.plot([pivot[0]]*len(t_points),  
@@ -176,19 +176,19 @@ def plot_pos_time(data1: LEDData, data2: LEDData, pivot: Point) -> None:
     ax.legend()
     plt.show()
 
-def plot_angles(data: LEDData) -> None:
+def plot_angles(data: LEDData, num: int) -> None:
     plt.figure(figsize=(8, 6))
     plt.plot([d[0] for d in data], [math.degrees(d[1]) for d in data], 'b')
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
-    plt.title(CONFIG["graph_title"])
+    plt.title(f"LED {num}: {CONFIG['graph_title']}")
     plt.grid(True)
     plt.show()
 
 def plot_comparison(data1: LEDData, data2: LEDData) -> None:
     plt.figure(figsize=(8, 6))
-    plt.plot([d[0] for d in data1], [math.degrees(d[1]) for d in data1], 'b', label='LED1')
-    plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], 'r', label='LED2')
+    plt.plot([d[0] for d in data1], [math.degrees(d[1]) for d in data1], 'b', label='LED 1')
+    plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], 'r', label='LED 2')
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
     plt.title(CONFIG["graph_title"])
@@ -204,8 +204,8 @@ def main():
         pivot, first, second = process_video()
         save_data(pivot, first, second)
 
-    plot_angles(first)
-    plot_angles(second)
+    plot_angles(first, 1)
+    plot_angles(second, 2)
     plot_comparison(first, second)
     plot_pos_time(first, second, pivot)
 
