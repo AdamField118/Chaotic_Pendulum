@@ -1,6 +1,7 @@
 # Content
 - [Overview](#overview)
 - [Video Processing](VideoProcessing/README.md)
+
   <details markdown="1">
   <summary>Contents of Video Processing</summary>
   - [Motivation](VideoProcessing/README.md#motivation)
@@ -13,9 +14,12 @@
   - [How to Use the Code](VideoProcessing/README.md#how-to-use-the-code)
   - [Results](VideoProcessing/README.md#results)
   </details>
+
 - [Simulation](Simulations/README.md)
+
   <details markdown="1">
   <summary>Contents of Simulation</summary>
+
   - [Plan](Simulations/README.md#plan)
   - [Mathematical Model](Simulations/README.md#mathematical-model)
     - [Setting up the Lagrangian](Simulations/README.md#setting-up-the-lagrangian)
@@ -35,7 +39,9 @@
     - [Graphing Functions](Simulations/README.md#graphing-functions)
     - [Main](Simulations/README.md#main)
   - [Results](Simulations/README.md#results)
+
   </details>
+  
 - [Poster](#poster)
 - [Credits](#credits)
 
