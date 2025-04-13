@@ -35,7 +35,20 @@
 
 # Overview  
 
-In Intermediate Physics Laboratory (2025) we have a project to analyze a chaotic pendulum system. The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. If you are a future group doing this lab and hope to code something cool, consider forking this repository!  
+In Intermediate Physics Laboratory (2025) we have a project to analyze a chaotic pendulum system. This will be done through tracking the angles of a physical set up, making a theoretical model, then comparing the results of the two.  
+
+Here is an image of the physical setup we are working with:  
+
+<div align="center">
+  <img src="./Assets/physical_setup.png" alt="Setup" width="90%">
+  <p>Figure 1. Physical Setup.</p>
+</div>
+
+The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. See [Video Processing](VideoProcessing/README.md).  
+
+We also used Lagrangians to make a theoretical model, then we simulated the model. See [Simulation](Simulations/README.md).  
+
+If you are a future group doing this lab and hope to code something cool, consider forking this repository!  
 
 # Poster  
 
