@@ -60,5 +60,5 @@ Here we can attach some information on our in class presentation, yet to be crea
 
 # Credits  
 
-Made by Christopher Pacheco and Adam Field.  
+Made by Adam Field and Christopher Pacheco.  
 Thank you Professor Noviello and TAs Drew and Holden for all the help.
