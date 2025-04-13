@@ -290,11 +290,16 @@ Defines an "update" function that computes Cartesian coordinates from the angula
 
 Animation Creation:  
 
-Uses "FuncAnimation" to create the animation, and saves it as a GIF file in the output directory specified by "CONFIG["sim_outpath"]".  
+Uses "FuncAnimation" to create the animation, and saves it as a GIF file in the output directory specified by "CONFIG['sim_outpath']".  
 
 Output:  
 
-See [this gif](<sim_outfiles/Chaotic Pendulum Oscillation.gif>).   
+See the gif below:  
+
+<div align="center">
+  <img src="./sim_outfiles/Chaotic Pendulum Oscillation.gif" alt="gif" width="90%">
+  <p>Figure 1. Simulation Output.</p>
+</div>
 
 ## Process Pendulum Data
 
@@ -329,7 +334,12 @@ Plots the angular displacement (converted to degrees) of both pendulum arms as a
 
 Output:  
 
-Displays the plot showing a comparison of the angles of the two arms.  See [this graph](<sim_outfiles/Angle Comparison - Chaotic Pendulum Oscillation.png>).
+Displays the plot showing a comparison of the angles of the two arms.  See the graph below:  
+
+<div align="center">
+  <img src="./sim_outfiles/Angle Comparison - Chaotic Pendulum Oscillation.png" alt="Graph 1" width="90%">
+  <p>Figure 2. Simulation Graph.</p>
+</div>
 
 ### plot_3d_trajectory  
 
@@ -339,7 +349,12 @@ Generates a 3D plot to visualize the spatial trajectory of each pendulum arm ove
     - Labels the axes (X Position, Time, Y Position) and adds a legend.  
 Output:  
 
-Displays a 3D plot that shows how each arm’s position evolves over time.  See [this graph](<sim_outfiles/3D Trajectory - Chaotic Pendulum Oscillation.png>).
+Displays a 3D plot that shows how each arm’s position evolves over time.  See the graph below:  
+
+<div align="center">
+  <img src="./sim_outfiles/3D Trajectory - Chaotic Pendulum Oscillation.png" alt="Graph 2" width="90%">
+  <p>Figure 3. 3D Simulation Graph.</p>
+</div>
 
 ## Main  
 
