@@ -1,7 +1,7 @@
 # Content
 - [Overview](#overview)
 - [Video Processing](VideoProcessing/README.md)
-  <details>
+  <details markdown="1">
   <summary>Contents of Video Processing</summary>
   - [Motivation](VideoProcessing/README.md#motivation)
     - [Dev Process](VideoProcessing/README.md#dev-process)
@@ -14,7 +14,7 @@
   - [Results](VideoProcessing/README.md#results)
   </details>
 - [Simulation](Simulations/README.md)
-  <details>
+  <details markdown="1">
   <summary>Contents of Simulation</summary>
   - [Plan](Simulations/README.md#plan)
   - [Mathematical Model](Simulations/README.md#mathematical-model)
