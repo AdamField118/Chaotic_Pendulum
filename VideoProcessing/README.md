@@ -45,7 +45,7 @@ For the simpler physical pendulum we took this video (click the picture below to
 </div>
 And got this graph from LED tracking:  
 <div align="center">
-  <img src="./images/current_state_graph_DSC_0053.png" alt="Graph 2" width="90%">
+  <img src="./processing_outfiles/DSC_0053 - Chaotic Double Pendulum.png" alt="Graph 1" width="90%">
   <p>Figure 1. Motion of the Physical Pendulum.</p>
 </div>
 Here is a video we took for the chaotic system (click the picture below to be redirected):  
@@ -58,6 +58,6 @@ Here is a video we took for the chaotic system (click the picture below to be re
 </div>
 And we got this graph from LED tracking:  
 <div align="center">
-  <img src="./images/current_state_graph_DSC_0059.png" alt="Graph 2" width="90%">
+  <img src="./processing_outfiles/DSC_0059 - Chaotic Double Pendulum.png" alt="Graph 2" width="90%">
   <p>Figure 2. Motion of the Double Pendulum.</p>
 </div>
