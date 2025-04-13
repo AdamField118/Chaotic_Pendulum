@@ -1,8 +1,8 @@
  # Content
- - [Overview](#overview)
- - [Video Processing](VideoProcessing/README.md)
+- [Overview](#overview)
+- [Video Processing](VideoProcessing/README.md)
   - [Motivation](VideoProcessing/README.md#motivation)
-  - [Dev Process](VideoProcessing/README.md#dev-process)
+    - [Dev Process](VideoProcessing/README.md#dev-process)
       - [Start](VideoProcessing/README.md#start)
       - [Decoding Chaotic Tracking ](VideoProcessing/README.md#decoding-chaotic-tracking)
           - [Color Differentiation](VideoProcessing/README.md#color-differentiation)
@@ -10,7 +10,7 @@
       - [Camera Setting](VideoProcessing/README.md#camera-setting)
   - [How to Use the Code](VideoProcessing/README.md#how-to-use-the-code)
   - [Results](VideoProcessing/README.md#results)
- - [Simulation](Simulations/README.md)
+- [Simulation](Simulations/README.md)
   - [Plan](Simulations/README.md#plan)
   - [Mathematical Model](Simulations/README.md#mathematical-model)
     - [Setting up the Lagrangian](Simulations/README.md#setting-up-the-lagrangian)
@@ -30,8 +30,8 @@
     - [Graphing Functions](Simulations/README.md#graphing-functions)
     - [Main](Simulations/README.md#main)
   - [Results](Simulations/README.md#results)
- - [Poster](#poster)
- - [Credits](#credits)
+- [Poster](#poster)
+- [Credits](#credits)
 
 # Overview  
 
