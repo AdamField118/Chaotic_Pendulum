@@ -25,7 +25,6 @@ CONFIG = {
     }
 }
 
-# Type definitions
 class PendulumData(NamedTuple):
     time: float
     angle: float
@@ -121,24 +120,20 @@ def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[Pend
     theta2 = solution.y[1]
     times = solution.t
     
-    # Compute Cartesian coordinates for all time steps
-    x1, y1, x2, y2 = get_cartesian_coords(theta1, theta2)
-    
-    # Create PendulumData using ODE angles (theta1, theta2) directly
     arm1_data = [
-        PendulumData(t, th1, (x, y))
-        for t, th1, x, y in zip(times, theta1, x1, y1)
+        PendulumData(t, math.atan2(x, (-y)), (x, y))
+        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[:2])
     ]
     
     arm2_data = [
-        PendulumData(t, th2, (x, y))
-        for t, th2, x, y in zip(times, theta2, x2, y2)
+        PendulumData(t, math.atan2(x, (-y)), (x, y))
+        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[2:])
     ]
     
     return arm1_data, arm2_data
 
 def plot_angle_comparison(arm1: List[PendulumData], arm2: List[PendulumData]) -> None:
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(24, 6))
     plt.plot(
         [d.time for d in arm1], [math.degrees(d.angle) for d in arm1], 
         label="Arm 1", color='b'
@@ -147,6 +142,7 @@ def plot_angle_comparison(arm1: List[PendulumData], arm2: List[PendulumData]) ->
         [d.time for d in arm2], [math.degrees(d.angle) for d in arm2], 
         label="Arm 2", color='r'
     )
+
     plt.xlabel("Time (seconds)")
     plt.ylabel("Angle (degrees)")
     plt.title(f"Angle Comparison - {CONFIG['title']}")
@@ -159,17 +155,19 @@ def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> No
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     
+    ax.plot(0,[d.time for d in arm1],0,label="Pivot", color="g")
+
     ax.plot(
         [d.position[0] for d in arm1],
         [d.time for d in arm1],
-        [-d.position[1] for d in arm1],
+        [d.position[1] for d in arm1],
         label="Arm 1", color='b'
     )
     
     ax.plot(
         [d.position[0] for d in arm2],
         [d.time for d in arm2],
-        [-d.position[1] for d in arm2],
+        [d.position[1] for d in arm2],
         label="Arm 2", color='r'
     )
     
@@ -177,7 +175,43 @@ def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> No
     ax.set_ylabel("Time")
     ax.set_zlabel("Y Position")
     ax.legend()
+    ax.set_box_aspect((3, 7, 2))
     plt.savefig(f"{CONFIG['sim_outpath']}3D Trajectory - {CONFIG['title']}.png")
+    plt.show()
+
+def compute_energy(solution: dict):
+    # Extract simulation data
+    theta1 = solution.y[0]
+    theta2 = solution.y[1]
+    omega1 = solution.y[2]
+    omega2 = solution.y[3]
+    t = solution.t
+
+    # Retrieve constants from the config
+    m1, m2 = CONFIG["params"]["masses"]
+    l1, l2 = CONFIG["params"]["lengths"]
+    g = CONFIG["params"]["gravity"]
+
+    T = ((1/24)*(m1+(4*m2))*(l1**2)*(omega1**2))+((1/24)*m2*(l2**2)*(omega2**2))+((1/6)*m2*l1*l2*omega1*omega2*np.cos(theta1-theta2))
+
+    V = - ((1/2)*(m1+(2*m2)) * g * l1 * np.cos(theta1)) - ((1/2)*m2*g*l2*np.cos(theta2))
+
+    E = T + V
+    return t, T, V, E
+
+def plot_energy(solution: dict):
+    t, T, V, E = compute_energy(solution)
+    
+    plt.figure(figsize=(24, 6))
+    plt.plot(t, T, label="Kinetic Energy", color='g')
+    plt.plot(t, V, label="Potential Energy", color='orange')
+    plt.plot(t, E, label="Total Energy", linestyle="--", color='blue')
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Energy (Joules)")
+    plt.title(f"Energy vs Time - {CONFIG['title']}")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f"{CONFIG['sim_outpath']}Energy Analysis - {CONFIG['title']}.png")
     plt.show()
 
 def main():
@@ -187,6 +221,7 @@ def main():
     
     plot_angle_comparison(arm1_data, arm2_data)
     plot_3d_trajectory(arm1_data, arm2_data)
+    plot_energy(solution)
 
 if __name__ == "__main__":
     main()

@@ -45,9 +45,9 @@ Here is an image of the physical setup we are working with:
   <p>Figure 1. Physical Setup.</p>
 </div>
 
-The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. See [Video Processing](VideoProcessing/README.md).  
+The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. See [this README](VideoProcessing/README.md).  
 
-We also used Lagrangians to make a theoretical model, then we simulated the model. See [Simulation](Simulations/README.md).  
+We also used Lagrangians to make a theoretical model, then we simulated the model. See [this README](Simulations/README.md).  
 
 If you are a future group doing this lab and hope to code something cool, consider forking this repository!  
 
