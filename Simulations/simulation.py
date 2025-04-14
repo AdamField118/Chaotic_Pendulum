@@ -5,15 +5,18 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from typing import NamedTuple, Tuple, List
 import math
 import os
+import json
+import hashlib
 
 CONFIG = {
     "title": "Chaotic Pendulum Oscillation",
     "sim_outpath": "./Simulations/sim_outfiles/",
+    "path_to_data": "C:\\Users\\adamf\\Downloads\\",
     "params": {
         "masses": (5.0, 4.0),
         "lengths": (0.525, 0.473),
         "gravity": 9.81,
-        "initial_angles": (1.5708, 0.0),
+        "initial_angles": (1.58544729307629, 0.007936341307466063),
         "initial_velocities": (0.0, 0.0), 
         "time_span": (0.0, 40.0),
         "num_points": 4000,
@@ -35,6 +38,18 @@ CartesianCoords = Tuple[float, float, float, float]
 
 def get_solver_params() -> dict:
     return CONFIG["params"]["solver"]
+
+def get_data_path() -> str:
+    # Convert tuples to lists for consistent hashing
+    params = CONFIG["params"].copy()
+    for key in ["masses", "lengths", "initial_angles", "initial_velocities"]:
+        if isinstance(params[key], tuple):
+            params[key] = list(params[key])
+    
+    param_hash = hashlib.sha256(
+        json.dumps(params, sort_keys=True).encode()
+    ).hexdigest()
+    return f"{CONFIG['path_to_data']}simulation_{param_hash}.txt"
 
 def equations_of_motion(t: float, y: StateVector) -> List[float]:
     m1, m2 = CONFIG["params"]["masses"]
@@ -59,18 +74,39 @@ def equations_of_motion(t: float, y: StateVector) -> List[float]:
 
     return [omega1, omega2, ddtheta1, ddtheta2]
 
-def solve_pendulum_ode() -> dict:
+def save_data(solution: dict, lengths: Tuple) -> None:
+    data = {
+        "y": solution["y"].tolist(),
+        "t": solution["t"].tolist(),
+        "lengths": list(lengths)
+    }
+    with open(get_data_path(), "w") as f:
+        json.dump(data, f)
+
+def load_saved_data() -> dict:
+    with open(get_data_path(), "r") as f:
+        data = json.load(f)
+        return {
+            "y": np.array(data["y"]),
+            "t": np.array(data["t"])
+        }
+
+def solve_pendulum_ode() -> Tuple[dict, Tuple]:
     t_span = CONFIG["params"]["time_span"]
     t_eval = np.linspace(*t_span, CONFIG["params"]["num_points"])
     y0 = (*CONFIG["params"]["initial_angles"], *CONFIG["params"]["initial_velocities"])
     
-    return solve_ivp(
+    sol = solve_ivp(
         fun=equations_of_motion,
         t_span=t_span,
         y0=y0,
         t_eval=t_eval,
         **get_solver_params()
     )
+    return {
+        "y": sol.y,
+        "t": sol.t
+    }, (CONFIG["params"]["lengths"])
 
 def get_cartesian_coords(theta1: float, theta2: float) -> CartesianCoords:
     l1, l2 = CONFIG["params"]["lengths"]
@@ -81,9 +117,9 @@ def get_cartesian_coords(theta1: float, theta2: float) -> CartesianCoords:
     return x1, y1, x2, y2
 
 def create_animation(solution: dict) -> FuncAnimation:
-    theta1 = solution.y[0]
-    theta2 = solution.y[1]
-    times = solution.t
+    theta1 = solution["y"][0]
+    theta2 = solution["y"][1]
+    times = solution["t"]
     
     fig, ax = plt.subplots()
     ax.set_xlim(-sum(CONFIG["params"]["lengths"]), sum(CONFIG["params"]["lengths"]))
@@ -116,9 +152,9 @@ def create_animation(solution: dict) -> FuncAnimation:
     return ani
 
 def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[PendulumData]]:
-    theta1 = solution.y[0]
-    theta2 = solution.y[1]
-    times = solution.t
+    theta1 = solution["y"][0]
+    theta2 = solution["y"][1]
+    times = solution["t"]
     
     arm1_data = [
         PendulumData(t, math.atan2(x, (-y)), (x, y))
@@ -155,7 +191,7 @@ def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> No
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     
-    ax.plot(0,[d.time for d in arm1],0,label="Pivot", color="g")
+    ax.plot(0, [d.time for d in arm1], 0, label="Pivot", color="g")
 
     ax.plot(
         [d.position[0] for d in arm1],
@@ -180,21 +216,21 @@ def plot_3d_trajectory(arm1: List[PendulumData], arm2: List[PendulumData]) -> No
     plt.show()
 
 def compute_energy(solution: dict):
-    # Extract simulation data
-    theta1 = solution.y[0]
-    theta2 = solution.y[1]
-    omega1 = solution.y[2]
-    omega2 = solution.y[3]
-    t = solution.t
+    theta1 = solution["y"][0]
+    theta2 = solution["y"][1]
+    omega1 = solution["y"][2]
+    omega2 = solution["y"][3]
+    t = solution["t"]
 
-    # Retrieve constants from the config
     m1, m2 = CONFIG["params"]["masses"]
     l1, l2 = CONFIG["params"]["lengths"]
     g = CONFIG["params"]["gravity"]
 
-    T = ((1/24)*(m1+(4*m2))*(l1**2)*(omega1**2))+((1/24)*m2*(l2**2)*(omega2**2))+((1/6)*m2*l1*l2*omega1*omega2*np.cos(theta1-theta2))
+    T = ((1/24)*(m1 + 4*m2)*(l1**2)*(omega1**2) + 
+         (1/24)*m2*(l2**2)*(omega2**2) + 
+         (1/6)*m2*l1*l2*omega1*omega2*np.cos(theta1 - theta2))
 
-    V = - ((1/2)*(m1+(2*m2)) * g * l1 * np.cos(theta1)) - ((1/2)*m2*g*l2*np.cos(theta2))
+    V = -((1/2)*(m1 + 2*m2)*g*l1*np.cos(theta1)) - (1/2)*m2*g*l2*np.cos(theta2)
 
     E = T + V
     return t, T, V, E
@@ -215,9 +251,16 @@ def plot_energy(solution: dict):
     plt.show()
 
 def main():
-    solution = solve_pendulum_ode()
-    create_animation(solution)
-    arm1_data, arm2_data = process_pendulum_data(solution)
+    data_path = get_data_path()
+    
+    if os.path.exists(data_path):
+        solution = load_saved_data()
+        arm1_data, arm2_data = process_pendulum_data(solution)
+    else:
+        solution, lengths = solve_pendulum_ode()
+        arm1_data, arm2_data = process_pendulum_data(solution)
+        save_data(solution, lengths)
+        create_animation(solution)
     
     plot_angle_comparison(arm1_data, arm2_data)
     plot_3d_trajectory(arm1_data, arm2_data)
