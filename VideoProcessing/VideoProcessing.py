@@ -6,9 +6,8 @@ import json
 import numpy as np
 from typing import Tuple, List, Optional
 
-# Configuration
 CONFIG = {
-    "video_name": "DSC_0059",
+    "video_name": "DSC_0053",
     "brightness_value": 140,
     "graph_title": "Physical Pendulum",
     "path_to_videos": "C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\",
@@ -188,15 +187,15 @@ def plot_angles(data: LEDData, num: int) -> None:
     plt.show()
 
 def plot_comparison(data1: LEDData, data2: LEDData) -> None:
-    plt.figure(figsize=(24, 6))
-    plt.plot([d[0] for d in data1], [math.degrees(d[1]) for d in data1], 'b', label='LED 1')
-    plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], 'r', label='LED 2')
-    plt.xlabel("Time (seconds)", fontsize=20)
-    plt.ylabel("Angle (degrees)", fontsize=20)
-    plt.title(CONFIG["graph_title"], fontsize=24)
-    plt.legend(fontsize=18)
-    plt.xticks(fontsize=16)
-    plt.yticks(fontsize=16)
+    plt.figure(figsize=(30, 8))
+    plt.plot([d[0] for d in data1], [math.degrees(d[1]) for d in data1], color='b', label='LED 1')
+    plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], color='r', label='LED 2')
+    plt.xlabel("Time (seconds)", fontsize=24)
+    plt.ylabel("Angle (degrees)", fontsize=24)
+    plt.title(CONFIG["graph_title"], fontsize=28)
+    plt.legend(fontsize=22)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(True)
     plt.savefig(f"{CONFIG['proc_outpath']}{CONFIG['video_name']} - {CONFIG['graph_title']}.png")
     plt.show()

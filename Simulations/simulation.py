@@ -13,10 +13,10 @@ CONFIG = {
     "sim_outpath": "./Simulations/sim_outfiles/",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
     "params": {
-        "masses": (5.0, 4.0),
+        "masses": (1.137, 1.455),
         "lengths": (0.525, 0.473),
         "gravity": 9.81,
-        "initial_angles": (1.58544729307629, 0.007936341307466063),
+        "initial_angles": (1.58544729307629, 0.007936341307466063), 
         "initial_velocities": (0.0, 0.0), 
         "time_span": (0.0, 40.0),
         "num_points": 4000,
@@ -156,15 +156,23 @@ def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[Pend
     theta2 = solution["y"][1]
     times = solution["t"]
     
-    arm1_data = [
-        PendulumData(t, math.atan2(x, (-y)), (x, y))
-        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[:2])
-    ]
+    arm1_data = []
+    arm2_data = []
     
-    arm2_data = [
-        PendulumData(t, math.atan2(x, (-y)), (x, y))
-        for t, x, y in zip(times, *get_cartesian_coords(theta1, theta2)[2:])
-    ]
+    # Iterate through each time step's angles
+    for t, th1, th2 in zip(times, theta1, theta2):
+        # Get coordinates for both masses
+        x1, y1, x2, y2 = get_cartesian_coords(th1, th2)
+        
+        # Arm 1: Angle is relative to the origin (0,0)
+        angle1 = math.atan2(x1, -y1)
+        arm1_data.append(PendulumData(t, angle1, (x1, y1)))
+        
+        # Arm 2: Angle is relative to the end of Arm 1 (x1, y1)
+        dx = x2 - x1  # Horizontal displacement from Arm 1's end
+        dy = y2 - y1  # Vertical displacement from Arm 1's end
+        angle2 = math.atan2(dx, -dy)  # Negative because positive y is downward
+        arm2_data.append(PendulumData(t, angle2, (x2, y2)))
     
     return arm1_data, arm2_data
 
