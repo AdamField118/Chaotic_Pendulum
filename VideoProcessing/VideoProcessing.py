@@ -7,8 +7,8 @@ import numpy as np
 from typing import Tuple, List, Optional
 
 CONFIG = {
-    "video_name": "DSC_0053",
-    "brightness_value": 140,
+    "video_name": "DSC_0058",
+    "brightness_value": 245,
     "graph_title": "Physical Pendulum",
     "path_to_videos": "C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
