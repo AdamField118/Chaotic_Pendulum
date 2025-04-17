@@ -31,6 +31,20 @@
     - [Graphing Functions](Simulations/README.md#graphing-functions)
     - [Main](Simulations/README.md#main)
   - [Results](Simulations/README.md#results)
+- [Verification](Verification/README.md)
+  - [Goal](Verification/README.md#goal)
+  - [The Code](Verification/README.md#the-code)
+      - [Fourier Functions](Verification/README.md#fourier-functions)
+          - [fourier_series](Verification/README.md#fourier_series)
+              - [Parameters](Verification/README.md#parameters)
+              - [Function Description](Verification/README.md#function-description)
+          - [fit_fourier](Verification/README.md#fit_fourier)
+              - [Parameters](Verification/README.md#Parameters-1)
+              - [Function Description](Verification/README.md#function-description-1)
+      - [Graphing Functions](Verification/README.md#graphing-functions)
+          - [plot_fourier_comparison](Verification/README.md#plot_fourier_comparison)
+          - [plot_deviation](Verification/README.md#plot_deviation)
+  - [Results](Verification/README.md#results)
 - [Poster](#poster)
 - [Credits](#credits)
 
@@ -53,7 +67,12 @@ If you are a future group doing this lab and hope to code something cool, consid
 
 # Poster  
 
-Here is an attached image of our poster, to be made.  
+Here is a poster of our progress made for the first lab of IPL:  
+
+<div align="center">
+  <img src="./Assets/Adam and Chris - Modeling of a Chaotic Pendulum.png" alt="Poster" width="90%">
+  <p>Figure 2. Project Poster!</p>
+</div>
 
 # Presentation   
 

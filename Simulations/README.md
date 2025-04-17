@@ -384,4 +384,18 @@ Runs the simulation workflow and produces visual outputs (plots and animation).
 
 # Results  
 
-We aren't happy with the results yet, improvements to come probably.  
+The following graph of the motion is outputted:  
+
+<div align="center">
+  <img src="./sim_outfiles/Angle Comparison - Chaotic Pendulum Oscillation.png" alt="Graph 1" width="90%">
+  <p>Figure 2. Angle Comparison Graph.</p>
+</div>
+
+In order to gain confidence in this graph of motion, we also graphed the kinetic, potential and total energy:  
+
+<div align="center">
+  <img src="./sim_outfiles/Energy Analysis - Chaotic Pendulum Oscillation.png" alt="Graph 1" width="90%">
+  <p>Figure 4. Energy Analysis.</p>
+</div>
+
+For a further analysis of the validity of this graph, see [this README](../Verification/README.md).
