@@ -144,8 +144,8 @@ def plot_deviation(arm1: List[PendulumData], arm2: List[PendulumData],
     sim_fit2 = fit_and_extend(sim_t2, sim_ang2, common_t)
 
     plt.figure(figsize=(24, 6))
-    plt.plot(common_t, np.abs(vid_fit1 - sim_fit1), label="Arm 1 Deviation", color='b', alpha=0.7)
-    plt.plot(common_t, np.abs(vid_fit2 - sim_fit2), label="Arm 2 Deviation", color='r', alpha=0.7)
+    plt.plot(common_t, vid_fit1 - sim_fit1, label="Arm 1 Deviation", color='b', alpha=0.7)
+    plt.plot(common_t, vid_fit2 - sim_fit2, label="Arm 2 Deviation", color='r', alpha=0.7)
     plt.xlabel("Time from Motion Start (seconds)")
     plt.ylabel("Angle Difference (degrees)")
     plt.title(f"{CONFIG['title']} - Fourier-based Deviation")
