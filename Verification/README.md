@@ -44,7 +44,7 @@ This function evaluates a Fourier series at specified time points, given the ser
 
 The function constructs the Fourier series:  
 
-$$f(t)=a_0 + \underset{\sigma}{n}\left(a_n\cdot\cos(2\pi n \frac{t}{T}) + b_n\cdot\sin(2\pi n \frac{t}{T})\right)$$  
+$$f(t)=a_0 + \overset{\Sigma}{n}\left(a_n\cdot\cos(2\pi n \frac{t}{T}) + b_n\cdot\sin(2\pi n \frac{t}{T})\right)$$  
 
 where:  
    - "a₀" is the zeroth coefficient (constant term),
