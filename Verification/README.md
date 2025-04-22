@@ -26,7 +26,7 @@ Initially we were just going to take the discrete data saved in .txt files on ou
 
 ## Fourier Functions  
 
-It was fast to impliment this in code, adding two functions:  
+It was fast to implement this in code, adding two functions:  
 
 ### fourier_series:  
 
