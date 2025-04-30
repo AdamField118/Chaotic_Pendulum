@@ -9,7 +9,7 @@ import json
 import hashlib
 
 CONFIG = {
-    "title": "Chaotic Pendulum Oscillation",
+    "title": "Chaotic Double Pendulum",
     "sim_outpath": "./Simulations/sim_outfiles/",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
     "params": {
@@ -177,7 +177,7 @@ def process_pendulum_data(solution: dict) -> Tuple[List[PendulumData], List[Pend
     return arm1_data, arm2_data
 
 def plot_angle_comparison(arm1: List[PendulumData], arm2: List[PendulumData]) -> None:
-    plt.figure(figsize=(24, 6))
+    plt.figure(figsize=(30, 8))
     plt.plot(
         [d.time for d in arm1], [math.degrees(d.angle) for d in arm1], 
         label="Arm 1", color='b'
@@ -187,10 +187,12 @@ def plot_angle_comparison(arm1: List[PendulumData], arm2: List[PendulumData]) ->
         label="Arm 2", color='r'
     )
 
-    plt.xlabel("Time (seconds)")
-    plt.ylabel("Angle (degrees)")
-    plt.title(f"Angle Comparison - {CONFIG['title']}")
-    plt.legend()
+    plt.xlabel("Time (seconds)", fontsize=24)
+    plt.ylabel("Angle (degrees)", fontsize=24)
+    plt.title(f"Simulated {CONFIG['title']}", fontsize=28)
+    plt.legend(fontsize=22)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(True)
     plt.savefig(f"{CONFIG['sim_outpath']}Angle Comparison - {CONFIG['title']}.png")
     plt.show()

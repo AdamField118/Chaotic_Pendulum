@@ -7,7 +7,7 @@ from typing import Tuple, List, NamedTuple, Dict, Any
 from scipy.optimize import curve_fit
 
 CONFIG = {
-    "title": "Verification of the Simulation with Respect to Real Life",
+    "title": "Fourier-based Deviation of the Simulation with Respect to Real Life",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
     "sim_data_name": "simulation_45df02e102a7b311c45a387d97d3856f720a1adcfb1d30d1a41ff66d88e170a0.txt",
     "vid_data_name": "DSC_0058.txt",
@@ -143,13 +143,15 @@ def plot_deviation(arm1: List[PendulumData], arm2: List[PendulumData],
     vid_fit2 = fit_and_extend(vid_t2, vid_ang2, common_t)
     sim_fit2 = fit_and_extend(sim_t2, sim_ang2, common_t)
 
-    plt.figure(figsize=(24, 6))
+    plt.figure(figsize=(30, 8))
     plt.plot(common_t, vid_fit1 - sim_fit1, label="Arm 1 Deviation", color='b', alpha=0.7)
     plt.plot(common_t, vid_fit2 - sim_fit2, label="Arm 2 Deviation", color='r', alpha=0.7)
-    plt.xlabel("Time from Motion Start (seconds)")
-    plt.ylabel("Angle Difference (degrees)")
-    plt.title(f"{CONFIG['title']} - Fourier-based Deviation")
-    plt.legend()
+    plt.xlabel("Time from Motion Start (seconds)", fontsize=24)
+    plt.ylabel("Angle Difference (degrees)", fontsize=24)
+    plt.title(f"{CONFIG['title']}", fontsize=28)
+    plt.legend(fontsize=22)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(True)
     plt.savefig(f"{CONFIG['ver_outpath']}Fourier_Deviation_{CONFIG['title']}.png")
     plt.show()
@@ -182,22 +184,25 @@ def plot_fourier_comparison(vid_data: LEDData, sim_data: List[PendulumData],
     vid_coeffs, vid_fit = fit_fourier(vid_t, vid_ang, num_terms)
     sim_coeffs, sim_fit = fit_fourier(sim_t, sim_ang, num_terms)
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(24, 12), sharex=True)
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(30, 16), sharex=True)
     ax1.scatter(vid_t, vid_ang, s=10, color='blue', alpha=0.5, label='Video Data')
     ax1.plot(vid_t, vid_fit, 'r-', lw=2, label=f'Fourier Fit ({num_terms} terms)')
-    ax1.set_ylabel("Angle (degrees)")
-    ax1.legend()
+    ax1.set_ylabel("Angle (degrees)", fontsize=24)
+    ax1.legend(fontsize=22)
+    ax1.tick_params(axis='x', labelsize=20)
+    ax1.tick_params(axis='y', labelsize=20)
     ax1.grid(True)
     
     ax2.scatter(sim_t, sim_ang, s=10, color='green', alpha=0.5, label='Simulation Data')
     ax2.plot(sim_t, sim_fit, 'orange', lw=2, label=f'Fourier Fit ({num_terms} terms)')
-    ax2.set_xlabel("Time from Motion Start (seconds)")
-    ax2.set_ylabel("Angle (degrees)")
-    ax2.legend()
+    ax2.set_xlabel("Time from Motion Start (seconds)", fontsize=24)
+    ax2.set_ylabel("Angle (degrees)", fontsize=24)
+    ax2.legend(fontsize=22)
+    ax2.tick_params(axis='x', labelsize=20)
+    ax2.tick_params(axis='y', labelsize=20)
     ax2.grid(True)
     
-
-    plt.suptitle(f"Arm {arm_num} - Fourier Series Comparison")
+    plt.suptitle(f"Arm {arm_num} - Fourier Series", fontsize=28)
     plt.tight_layout()
     plt.savefig(f"{CONFIG['ver_outpath']}Fourier_Comparison_Arm{arm_num}.png")
     plt.show()

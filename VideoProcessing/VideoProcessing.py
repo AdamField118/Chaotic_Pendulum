@@ -9,7 +9,7 @@ from typing import Tuple, List, Optional
 CONFIG = {
     "video_name": "DSC_0058",
     "brightness_value": 245,
-    "graph_title": "Physical Pendulum",
+    "graph_title": "Chaotic Double Pendulum",
     "path_to_videos": "C:\\Users\\adamf\\OneDrive\\Desktop\\IPL\\Double Pendulum\\Videos\\",
     "path_to_data": "C:\\Users\\adamf\\Downloads\\",
     "proc_outpath": "./VideoProcessing/processing_outfiles/",
@@ -192,7 +192,7 @@ def plot_comparison(data1: LEDData, data2: LEDData) -> None:
     plt.plot([d[0] for d in data2], [math.degrees(d[1]) for d in data2], color='r', label='LED 2')
     plt.xlabel("Time (seconds)", fontsize=24)
     plt.ylabel("Angle (degrees)", fontsize=24)
-    plt.title(CONFIG["graph_title"], fontsize=28)
+    plt.title(f"Real Life {CONFIG['graph_title']}", fontsize=28)
     plt.legend(fontsize=22)
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
