@@ -11,7 +11,6 @@
 - [Results](#results)
 
 # Motivation  
-Hello Test Comment  
 We first decided to make a tracking solution when we tried using the provided MATLAB code and realized it didn't work or make any sense.  
 Primarily the goal was to use python, a language we were previously familiar with, to create a code that could be used by groups in the future with minimal assumptions of their physical set up.  
 # Dev Process  
