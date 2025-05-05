@@ -14,8 +14,20 @@
             <ol>
               <li><a href="VideoProcessing/README.md#start">Start</a></li>
             </ol>
-          </details>
-          </details>
+            </details>
+              <details>
+                <summary><a href="VideoProcessing/README.md#decoding-chaotic-tracking">Decodeing Chaotic Tracking</a></summary>
+                <ol>
+                  <li><a href="VideoProcessing/README.md#color-differentiation">Color Differentiation</a></li>
+                </ol>
+                <ol>
+                  <li><a href="VideoProcessing/README.md#previous-frame-proximity">Previous Frame Proximity</a></li>
+                </ol>
+              </details>
+            </details>
+            <ol>
+              <li><a href="VideoProcessing/README.md#camera-setting">Camera Setting</a></li>
+            </ol>
         </ol>
       </ol>
     </details>
