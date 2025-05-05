@@ -1,5 +1,29 @@
 # Content  
 
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <summary><a href="VideoProcessing/README.md">Video Procesing</a></summary>
+    <ol>
+      <li>
+        <a href="VideoProcessing/README.md#dev-process">Dev Process</a>
+        <ul>
+          <li><a href="#built-with">Built With</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#getting-started">Getting Started</a>
+        <ul>
+          <li><a href="#set-up">Set-up</a></li>
+        </ul>
+      </li>
+      <li><a href="#pseudocode">Pseudocode</a></li>
+      <li><a href="#breakdown-of-code">Breakdown of Code</a></li>
+      <li><a href="#contact">Contact</a></li>
+    <ol>
+  </ol>
+</details>
+
 - [Overview](#overview)
 - [Video Processing](VideoProcessing/README.md)
   - [Motivation](VideoProcessing/README.md#motivation)
