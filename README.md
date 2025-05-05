@@ -50,8 +50,6 @@
 
 # Overview  
 
-Hi  
-
 In Intermediate Physics Laboratory (2025) we have a project to analyze a chaotic pendulum system. This will be done through tracking the angles of a physical set up, making a theoretical model, then comparing the results of the two.  
 
 Here is an image of the physical setup we are working with:  
