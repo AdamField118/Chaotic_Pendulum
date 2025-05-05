@@ -8,27 +8,27 @@
       <ol>
         <details>
         <summary><a href="VideoProcessing/README.md#motivation">Motivation</a></summary>
-        <ol>
-          <details>
+          <ol>
+            <details>
             <summary><a href="VideoProcessing/README.md#dev-process">Dev Process</a></summary>
-            <ol>
-              <li><a href="VideoProcessing/README.md#start">Start</a></li>
-            </ol>
+              <ol>
+                <li><a href="VideoProcessing/README.md#start">Start</a></li>
+              </ol>
             </details>
-              <details>
-                <summary><a href="VideoProcessing/README.md#decoding-chaotic-tracking">Decodeing Chaotic Tracking</a></summary>
-                <ol>
-                  <li><a href="VideoProcessing/README.md#color-differentiation">Color Differentiation</a></li>
-                </ol>
-                <ol>
-                  <li><a href="VideoProcessing/README.md#previous-frame-proximity">Previous Frame Proximity</a></li>
-                </ol>
-              </details>
+            <details>
+            <summary><a href="VideoProcessing/README.md#decoding-chaotic-tracking">Decodeing Chaotic Tracking</a></summary>
+              <ol>
+                <li><a href="VideoProcessing/README.md#color-differentiation">Color Differentiation</a></li>
+              </ol>
+              <ol>
+                <li><a href="VideoProcessing/README.md#previous-frame-proximity">Previous Frame Proximity</a></li>
+              </ol>
             </details>
             <ol>
               <li><a href="VideoProcessing/README.md#camera-setting">Camera Setting</a></li>
             </ol>
-        </ol>
+          </ol>
+        </details>
       </ol>
     </details>
   </ol>
