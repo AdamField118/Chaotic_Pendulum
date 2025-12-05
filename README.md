@@ -120,12 +120,12 @@ In Intermediate Physics Laboratory (2025) we have a project to analyze a chaotic
 
 Here is an image of the physical setup we are working with:  
 
-<div asummarygn="center">
+<div align="center">
   <img src="./Assets/physical_setup.png" alt="Setup" width="90%">
   <p>Figure 1. Physical Setup.</p>
 </div>
 
-The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python summarybraries. See [this README](VideoProcessing/README.md).  
+The MATLAB code given to us for tracking LEDs in a video was broken, old, and quite frankly bad, so we developed a new solution using openCV and other python libraries. See [this README](VideoProcessing/README.md).  
 
 We also used Lagrangians to make a theoretical model, then we simulated the model. See [this README](Simulations/README.md).  
 
@@ -135,8 +135,8 @@ If you are a future group doing this lab and hope to code something cool, consid
 
 Here is a poster of our progress made for the first lab of IPL:  
 
-<div asummarygn="center">
-  <img src="./Assets/Adam and Chris - Modesummaryng of a Chaotic Pendulum.png" alt="Poster" width="90%">
+<div align="center">
+  <img src="./Assets/Adam and Chris - Modeling of a Chaotic Pendulum.png" alt="Poster" width="90%">
   <p>Figure 2. Project Poster!</p>
 </div>
 
