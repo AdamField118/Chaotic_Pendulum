@@ -111,6 +111,8 @@
     </ol>
   </details>
   <summary><a href="#poster">Poster</a></summary>
+  <summary><a href="#future-work">Future Work</a></summary>
+  <summary><a href="#presentation">Presentation</a></summary>
   <summary><a href="#credits">Credits</a></summary>
 </ol>
 
@@ -143,6 +145,15 @@ Here is a poster of our progress made for the first lab of IPL:
 # Presentation   
 
 The presentation in class went well! Here is the [slides we used](Assets/Adam%20and%20Chris%20-%20Chaotic%20Pendulum%20Presentation.pdf).
+
+# Future Work
+
+Our verification shows Arm 1 matches simulation well (±5°) while Arm 2 diverges significantly (±50°), suggesting our frictionless model needs refinement.
+
+- Add viscous damping terms to the equations of motion
+- Fit physical parameters (masses, lengths, damping coefficients) from video data using inverse optimization
+- Implement a hybrid physics-ML model to capture residual dynamics (air resistance, joint compliance)
+- Characterize chaos via Lyapunov exponents and Poincaré sections
 
 # Credits  
 
