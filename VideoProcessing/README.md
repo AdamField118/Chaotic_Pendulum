@@ -1,14 +1,28 @@
-# Content  
+# Table of Contents
 
-- [Motivation](#motivation)
-- [Dev Process](#dev-process)
-    - [Start](#start)
-    - [Decoding Chaotic Tracking ](#decoding-chaotic-tracking)
-        - [Color Differentiation](#color-differentiation)
-        - [Previous Frame Proximity](#previous-frame-proximity)
-    - [Camera Setting](#camera-setting)
-- [How to Use the Code](#how-to-use-the-code)
-- [Results](#results)
+<ol>
+  <details>
+  <summary><a href="VideoProcessing/README.md#motivation">Motivation</a></summary>
+    <ol>
+      <details>
+      <summary><a href="VideoProcessing/README.md#dev-process">Dev Process</a></summary>
+        <ol>
+          <summary><a href="VideoProcessing/README.md#start">Start</a></summary>
+          <details>
+          <summary><a href="VideoProcessing/README.md#decoding-chaotic-tracking">Decoding Chaotic Tracking</a></summary>
+            <ol>
+              <summary><a href="VideoProcessing/README.md#color-differentiation">Color Differentiation</a></summary>
+              <summary><a href="VideoProcessing/README.md#previous-frame-proximity">Previous Frame Proximity</a></summary>
+            </ol>
+          </details>
+          <summary><a href="VideoProcessing/README.md#camera-setting">Camera Setting</a></summary>
+        </ol>
+      </details>
+    </ol>
+  </details>
+  <summary><a href="VideoProcessing/README.md#how-to-use-the-code">How to Use the Code</a></summary>
+  <summary><a href="VideoProcessing/README.md#results">Results</a></summary>
+</ol>
 
 # Motivation  
 We first decided to make a tracking solution when we tried using the provided MATLAB code and realized it didn't work or make any sense.  

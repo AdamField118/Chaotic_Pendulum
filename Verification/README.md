@@ -1,18 +1,40 @@
-# Content
+# Table of Contents
 
-- [Goal](#goal)
-- [The Code](#the-code)
-    - [Fourier Functions](#fourier-functions)
-        - [fourier_series](#fourier_series)
-            - [Parameters](#parameters)
-            - [Function Description](#function-description)
-        - [fit_fourier](#fit_fourier)
-            - [Parameters](#Parameters-1)
-            - [Function Description](#function-description-1)
-    - [Graphing Functions](#graphing-functions)
-        - [plot_fourier_comparison](#plot_fourier_comparison)
-        - [plot_deviation](#plot_deviation)
-- [Results](#results)
+<ol>
+  <summary><a href="Verification/README.md#goal">Goal</a></summary>
+  <details>
+  <summary><a href="Verification/README.md#the-code">The Code</a></summary>
+    <ol>
+      <details>
+      <summary><a href="Verification/README.md#fourier-functions">Fourier Functions</a></summary>
+        <ol>
+          <details>
+          <summary><a href="Verification/README.md#fourier_series">fourier_series</a></summary>
+            <ol>
+              <summary><a href="Verification/README.md#parameters">Parameters</a></summary>
+              <summary><a href="Verification/README.md#function-description">Function Description</a></summary>
+            </ol>
+          </details>
+          <details>
+          <summary><a href="Verification/README.md#fit_fourier">fit_fourier</a></summary>
+            <ol>
+              <summary><a href="Verification/README.md#Parameters-1">Parameters</a></summary>
+              <summary><a href="Verification/README.md#function-description-1">Function Description</a></summary>
+            </ol>
+          </details>
+        </ol>
+      </details>
+      <details>
+      <summary><a href="Verification/README.md#graphing-functions">Graphing Functions</a></summary>
+        <ol>
+          <summary><a href="Verification/README.md#plot_fourier_comparison">plot_fourier_comparison</a></summary>
+          <summary><a href="Verification/README.md#plot_deviation">plot_deviation</a></summary>
+        </ol>
+      </details>
+    </ol>
+  </details>
+  <summary><a href="Verification/README.md#results">Results</a></summary>
+</ol>
 
 # Goal  
 
@@ -30,7 +52,7 @@ It was fast to implement this in code, adding two functions:
 
 ### fourier_series:  
 
-This function evaluates a Fourier series at specified time points, given the series' coefficients and period. It is designed for users with a background in physics and introductory programming knowledge.
+This function evaluates a Fourier series at specified time points, given the series' coefficients and period.
 
 #### Parameters  
 
@@ -58,7 +80,7 @@ Note:
 
 ### fit_fourier:  
 
-This function fits a Fourier series to input data "(t, y)" using nonlinear least squares optimization. It returns the fitted coefficients and the evaluated Fourier series at the input time points. Designed for users familiar with signal processing and basic numerical methods.
+This function fits a Fourier series to input data "(t, y)" using nonlinear least squares optimization. It returns the fitted coefficients and the evaluated Fourier series at the input time points.
 
 #### Parameters
   - "t" (np.ndarray): Time points of the input data (1D array).

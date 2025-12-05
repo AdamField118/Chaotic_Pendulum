@@ -1,24 +1,46 @@
-# Content  
+# Table of Contents
 
-- [Plan](#plan)
-- [Mathematical Model](#mathematical-model)
-    - [Setting up the Lagrangian](#setting-up-the-lagrangian)
-    - [Euler-Lagrange Equations](#euler-lagrange-equations)
-    - [Final Equations](#final-equations)
-- [The Code](#the-code)
-    - [Config](#config)
-        - [Params](#params)
-            - [Solver](#solver)
-    - [Equations of Motion](#equations-of-motion)
-        - [Parameters and State Extraction](#parameters-and-state-extraction)
-        - [Intermediate Calculations](#intermediate-calculations)
-        - [Return Value](#return-value)
-    - [Solve Pendulum ODE](#solve-pendulum-ode)
-    - [Create Animation](#create-animation)
-    - [Process Pendulum Data](#process-pendulum-data)
-    - [Graphing Functions](#graphing-functions)
-    - [Main](#main)
-- [Results](#results)
+<ol>
+  <summary><a href="./README.md#plan">Plan</a></summary>
+  <details>
+  <summary><a href="./README.md#mathematical-model">Mathematical Model</a></summary>
+    <ol>
+      <summary><a href="./README.md#setting-up-the-lagrangian">Setting up the Lagrangian</a></summary>
+      <summary><a href="./README.md#euler-lagrange-equations">Euler-Lagrange Equations</a></summary>
+      <summary><a href="./README.md#final-equations">Final Equations</a></summary>
+    </ol>
+  </details>
+  <details>
+  <summary><a href="./README.md#the-code">The Code</a></summary>
+    <ol>
+      <details>
+      <summary><a href="./README.md#config">Config</a></summary>
+        <ol>
+          <details>
+          <summary><a href="./README.md#params">Params</a></summary>
+            <ol>
+              <summary><a href="./README.md#solver">Solver</a></summary>
+            </ol>
+          </details>
+        </ol>
+      </details>
+      <details>
+      <summary><a href="./README.md#equations-of-motion">Equations of Motion</a></summary>
+        <ol>
+          <summary><a href="./README.md#parameters-and-state-extraction">Parameters and State Extraction</a></summary>
+          <summary><a href="./README.md#intermediate-calculations">Intermediate Calculations</a></summary>
+          <summary><a href="./README.md#return-value">Return Value</a></summary>
+        </ol>
+      </details>
+      <summary><a href="./README.md#solve-pendulum-ode">Solve Pendulum ODE</a></summary>
+      <summary><a href="./README.md#create-animation">Create Animation</a></summary>
+      <summary><a href="./README.md#process-pendulum-data">Process Pendulum Data</a></summary>
+      <summary><a href="./README.md#graphing-functions">Graphing Functions</a></summary>
+      <summary><a href="./README.md#main">Main</a></summary>
+    </ol>
+  </details>
+  <summary><a href="./README.md#results">Results</a></summary>
+</ol>
 
 # Plan  
 The first step will be to make a mathematical model, the next step will be to research approximation tecniques, then we can code the simulation and see how it turns out! We hope to get graphs out that can be compared to the real world data outputted by the LED tracking program.  
